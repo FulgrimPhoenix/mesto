@@ -1,0 +1,15 @@
+.profile__button-image{
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-image: url(../../../images/profile/__button/profile__button.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+  right: 38px;
+  top: 154px;
+}
+
+.profile__button-image:hover{
+  opacity: 0.6;
+}
