@@ -1,0 +1,11 @@
+.form__background{
+  position: relative;
+  padding: 25px 22px;
+  margin: 123px 0 0;
+  width: 100%;
+  max-width: 430px;
+  min-height: 322px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,17 @@
+.form__exit{
+  position: absolute;
+  background: url(../../../images/form/__exit/form__exit.png) no-repeat;
+  background-size: cover;
+  top: -36px;
+  right: 0;
+  width: 20px;
+  padding-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.form__exit:hover{
+  opacity: .6;
+}
