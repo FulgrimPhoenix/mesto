@@ -1,0 +1,13 @@
+.photo-grid__like-button-image{
+  position: relative;
+  width: 22px;
+  height: 19px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  background-image: url(../../../images/photo-grid/__like/photo__like.png);
+}
+
+.photo-grid__like-button-image:hover{
+  opacity: .5;
+}

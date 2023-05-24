@@ -1,0 +1,13 @@
+.photo-grid__button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  padding-bottom: 86.4%;
+  border: none; 
+
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 2;
+  cursor: pointer;
+}
