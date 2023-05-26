@@ -10,8 +10,8 @@
   border-radius: 2px;
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 17px;
   text-align: center;
   color: #FFFFFF;
   cursor: pointer;
@@ -19,4 +19,13 @@
 
 .form__save-button:hover{
   opacity: .8;
+}
+
+@media screen and (min-width: 880px) {
+  .form__save-button{
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 50px;
+    min-height: 50px;
+  }
 }

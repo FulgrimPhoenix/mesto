@@ -6,3 +6,12 @@
   margin: 42px 0 0;
   padding: 0 19px 0;
 }
+
+@media screen and (min-width:900px) {
+  .profile{
+    margin: 40px 0 0;
+    flex-direction: row;
+    padding: 0;
+    justify-content: space-between;
+  }
+}

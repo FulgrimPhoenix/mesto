@@ -9,9 +9,10 @@
   justify-content: center;
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:900px) {
   .photo-grid{
     padding: 0;
+    margin: 50px auto 0;
   }
   
 }

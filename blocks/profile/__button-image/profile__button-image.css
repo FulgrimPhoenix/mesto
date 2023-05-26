@@ -13,3 +13,13 @@
 .profile__button-image:hover{
   opacity: 0.6;
 }
+
+@media screen and (min-width: 880px) {
+  .profile__button-image{
+    background-image: url(../../../images/profile/__button/profile__button_880.svg);
+    width: 24px;
+    height: 24px;
+    right: 393px;
+    top: 36px;
+  } 
+}

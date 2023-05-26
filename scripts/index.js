@@ -6,6 +6,7 @@ let profileInfo = document.querySelector('.profile__cell');
 let saveButton = document.querySelector('.form__save-button');
 let formName = document.querySelector('.form__name');
 let formInfo = document.querySelector('.form__info');
+let likeButton = document.querySelectorAll('.photo-grid__like-button-image');
 
   function openEditWindow() {
     form.classList.add('form_active');
@@ -17,12 +18,11 @@ let formInfo = document.querySelector('.form__info');
   return
   }
 
+  
+
   function saveChanges(){
     formName = document.querySelector('.form__name');
     formInfo = document.querySelector('.form__info');
-
-    console.log(formName.value);
-    console.log(formInfo.value);
 
     formName.setAttribute('placeholder', formName.value);
     formInfo.setAttribute('placeholder', formInfo.value);
@@ -39,4 +39,15 @@ let formInfo = document.querySelector('.form__info');
 
 editBottom.addEventListener('click', openEditWindow);
 exitButton.addEventListener('click', closeEditWindow);
+saveButton.addEventListener('submit', saveChanges);
 saveButton.addEventListener('click', saveChanges);
+
+function likeActivate(){
+  for (let i = 0; i < 6; i++){
+    likeButton[i].addEventListener('click', function likeCondition(){
+      likeButton[i].classList.toggle('photo-grid__like-button-image_active');
+    });
+  }
+}
+
+likeActivate();

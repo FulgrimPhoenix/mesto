@@ -8,3 +8,10 @@
   color: #FFFFFF;
 }
 
+@media screen and (min-width:880px) {
+  .profile__name{
+    font-size: 42px;
+    line-height: 114%;
+  }
+}
+
