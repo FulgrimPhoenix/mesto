@@ -20,7 +20,8 @@ let likeButton = document.querySelectorAll('.photo-grid__like-button-image');
 
   
 
-  function saveChanges(){
+  function saveChanges(evt){
+    evt.preventDefault();
     formName = document.querySelector('.form__name');
     formInfo = document.querySelector('.form__info');
 
