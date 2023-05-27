@@ -1,20 +1,20 @@
 let editBottom = document.querySelector('.profile__button');
-let form = document.querySelector('.form');
-let exitButton = document.querySelector('.form__exit');
-let formWindow = document.querySelector('.form__background');
+let popup = document.querySelector('.popup');
+let exitButton = document.querySelector('.popup__exit');
 let profileInfo = document.querySelector('.profile__cell');
-let saveButton = document.querySelector('.form__save-button');
-let formName = document.querySelector('.form__name');
-let formInfo = document.querySelector('.form__info');
+let saveButton = document.querySelector('.popup__save-button');
+let Name = document.querySelector('.profile__name');
+let Speciality = document.querySelector('.profile__info');
 let likeButton = document.querySelectorAll('.photo-grid__like-button-image');
+let form = popup.querySelector('.popup__form')
 
   function openEditWindow() {
-    form.classList.add('form_active');
+    popup.classList.add('popup_opened');
   return
   }
 
   function closeEditWindow(){
-    form.classList.remove('form_active');
+    popup.classList.remove('popup_opened');
   return
   }
 
@@ -22,25 +22,21 @@ let likeButton = document.querySelectorAll('.photo-grid__like-button-image');
 
   function saveChanges(evt){
     evt.preventDefault();
-    formName = document.querySelector('.form__name');
-    formInfo = document.querySelector('.form__info');
+    inputFormName = document.querySelector('.popup__input_field_name');
+    inputFormSpeciality = document.querySelector('.popup__input_field_speciality');
 
-    formName.setAttribute('placeholder', formName.value);
-    formInfo.setAttribute('placeholder', formInfo.value);
+    Name.textContent = inputFormName.value;
+    Speciality.textContent = inputFormSpeciality.value;
 
-    profileInfo.innerHTML = `<h2 class="profile__name">${formName.value}</h2>
-    <p class="profile__info">${formInfo.value}</p>`
-
-    console.log('x');
-    formName.value = '';
-    formInfo.value = '';
-    form.classList.remove('form_active');
+    inputFormName.value = '';
+    inputFormSpeciality.value = '';
+    popup.classList.remove('popup_opened');
     return
   }
 
 editBottom.addEventListener('click', openEditWindow);
 exitButton.addEventListener('click', closeEditWindow);
-saveButton.addEventListener('submit', saveChanges);
+form.addEventListener('submit', saveChanges);
 saveButton.addEventListener('click', saveChanges);
 
 function likeActivate(){
