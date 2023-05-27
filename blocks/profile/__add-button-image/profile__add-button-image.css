@@ -6,7 +6,7 @@
   border: 2px solid #fff;
   box-sizing: border-box;
   z-index: 1;
-  background-image: url(../../../images/profile/__button/profile__add-button.png);
+  background-image: url(../../../images/profile/__button/profile__add-button.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -22,7 +22,7 @@
 
 @media screen and (min-width:880px) {
   .profile__add-button-image{
-    background-image: url(../../../images/profile/__button/profile__add-button_880.png);
+    background-image: url(../../../images/profile/__button/profile__add-button.svg);
     background-size: 22px 22px;
     width: 17.04%;
     margin: 0;

@@ -4,13 +4,10 @@
   margin: 25px 0 0;
   display: block;
   width: 100%;
-  min-height: 33px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   border: none;
   background-color: #fff;
   color: #000;
+  line-height: 33px;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
@@ -62,7 +59,7 @@
 
 @media screen and (min-width: 880px) {
   .popup__input{
-    margin: 24px 0 0;
+    margin: 23px 0 0;
   }
   
 }

@@ -1,5 +1,5 @@
 .photo-grid__title{
-  display: inline-block;
+  display: flex;
   max-width: 200px;
   margin: 0;
   padding: 0;

@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-self: center;
-  background-image: url(../../../images/photo-grid/__like/photo__like.png);
+  background-image: url(../../../images/photo-grid/__like/photo__like.svg);
   background-repeat: no-repeat;
   background-position: center;
   border: none;

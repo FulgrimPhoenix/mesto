@@ -1,6 +1,6 @@
 .popup__exit{
   position: absolute;
-  background: url(../../../images/form/__exit/form__exit.png) no-repeat;
+  background: url(../../../images/form/__exit/form__exit.svg) no-repeat;
   background-size: cover;
   top: -36px;
   right: 0;

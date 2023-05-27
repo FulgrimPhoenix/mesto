@@ -6,10 +6,14 @@ let saveButton = document.querySelector('.popup__save-button');
 let Name = document.querySelector('.profile__name');
 let Speciality = document.querySelector('.profile__info');
 let likeButton = document.querySelectorAll('.photo-grid__like-button-image');
-let form = popup.querySelector('.popup__form')
+let form = popup.querySelector('.popup__form');
+let inputFormName = document.querySelector('.popup__input_field_name');
+let inputFormSpeciality = document.querySelector('.popup__input_field_speciality');
 
   function openEditWindow() {
     popup.classList.add('popup_opened');
+    inputFormName.setAttribute('placeholder', Name.textContent); 
+    inputFormSpeciality.setAttribute('placeholder', Speciality.textContent);
   return
   }
 
@@ -22,8 +26,6 @@ let form = popup.querySelector('.popup__form')
 
   function saveChanges(evt){
     evt.preventDefault();
-    inputFormName = document.querySelector('.popup__input_field_name');
-    inputFormSpeciality = document.querySelector('.popup__input_field_speciality');
 
     Name.textContent = inputFormName.value;
     Speciality.textContent = inputFormSpeciality.value;
