@@ -1,4 +1,4 @@
-let editBottom = document.querySelector('.profile__button');
+let editBottom = document.querySelector('.profile__button-image');
 let popup = document.querySelector('.popup');
 let exitButton = document.querySelector('.popup__exit');
 let profileInfo = document.querySelector('.profile__cell');

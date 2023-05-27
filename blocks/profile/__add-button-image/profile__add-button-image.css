@@ -10,6 +10,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 16px 16px;
+  outline: none;
+  border: 2px solid #fff;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 .profile__add-button-image:hover{

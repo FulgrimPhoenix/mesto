@@ -8,6 +8,9 @@
   background-image: url(../../../images/photo-grid/__like/photo__like.png);
   background-repeat: no-repeat;
   background-position: center;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .photo-grid__like-button-image:hover{
