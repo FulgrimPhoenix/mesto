@@ -10,6 +10,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 3;
   display: none;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 @media screen and (min-width: 350px) {
