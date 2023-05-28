@@ -12,8 +12,8 @@ let inputFormSpeciality = document.querySelector('.popup__input_field_speciality
 
   function openEditWindow() {
     popup.classList.add('popup_opened');
-    inputFormName.setAttribute('placeholder', Name.textContent); 
-    inputFormSpeciality.setAttribute('placeholder', Speciality.textContent);
+    inputFormName.value = Name.textContent;
+    inputFormSpeciality.value = Speciality.textContent;
   return
   }
 
@@ -30,8 +30,6 @@ let inputFormSpeciality = document.querySelector('.popup__input_field_speciality
     Name.textContent = inputFormName.value;
     Speciality.textContent = inputFormSpeciality.value;
 
-    inputFormName.value = '';
-    inputFormSpeciality.value = '';
     popup.classList.remove('popup_opened');
     return
   }
@@ -39,7 +37,7 @@ let inputFormSpeciality = document.querySelector('.popup__input_field_speciality
 editBottom.addEventListener('click', openEditWindow);
 exitButton.addEventListener('click', closeEditWindow);
 form.addEventListener('submit', saveChanges);
-saveButton.addEventListener('click', saveChanges);
+
 
 function likeActivate(){
   for (let i = 0; i < 6; i++){
