@@ -10,8 +10,11 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 3;
   display: none;
-  justify-content: center;
-  align-items: flex-start;
+  /*Дело в том, что в макете фигмы блок не центрировал по вертикали, поэтому я задавал
+  отступы как в макете. Мы обсудили это с наставниками и они сказали центрировать как сказали вы - 
+  в том числе еи по вертикали*/
+  justify-content: space-around;
+  align-items: center;
 }
 
 @media screen and (min-width: 350px) {
