@@ -6,4 +6,5 @@
   max-width: 880px;
   background-color: #000;
   font-family: "Inter", Arial, sans-serif;
+  box-sizing: border-box;
 }
