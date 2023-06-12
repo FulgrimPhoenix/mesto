@@ -37,6 +37,7 @@ const initialCards = [
   }
 ];
 
+
 initialCards.forEach((item) => {
 const cardTamplate = document.querySelector('#photo-grid__cell').content;
 const card = document.querySelector('.photo-grid');
@@ -45,6 +46,11 @@ const cardElements = cardTamplate.querySelector('.photo-grid__cell').cloneNode(t
   cardElements.querySelector('.photo-grid__photo').src = item.link;
   cardElements.querySelector('.photo-grid__photo').alt = item.name;
   cardElements.querySelector('.photo-grid__title').textContent = item.name;
+
+  cardElements.querySelector('.photo-grid__like-button-image').addEventListener('click', () => {
+    cardElements.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active');
+  });
+
 
 card.append(cardElements);})
 
@@ -98,7 +104,6 @@ form.addEventListener('submit', evt => {
     Name.textContent = inputFormName.value;
     Speciality.textContent = inputFormSpeciality.value;
     popup.classList.remove('popup_opened');
-    console.lod('ia1')
     return
   }else if (inputFormSpeciality.value !== '') {
     const srcForm = inputFormSpeciality.value;
@@ -118,7 +123,9 @@ form.addEventListener('submit', evt => {
   }
 });
 
+
 /*
+
 function likeActivate(){
   for (let i = 0; i < 6; i++){
     likeButton[i].addEventListener('click', function likeCondition(){
