@@ -56,14 +56,10 @@ card.append(cardElements);})
   return
   }
 
-
-
   function closeEditWindow(){
     popup.classList.remove('popup_opened');
   return
   }
-
-  
 
   function saveChanges(evt){
     evt.preventDefault();
@@ -102,7 +98,21 @@ form.addEventListener('submit', evt => {
     Name.textContent = inputFormName.value;
     Speciality.textContent = inputFormSpeciality.value;
     popup.classList.remove('popup_opened');
+    console.lod('ia1')
     return
+  }else if (inputFormSpeciality.value !== '') {
+    const srcForm = inputFormSpeciality.value;
+    const titleForm = inputFormName.value;
+    const cardTamplate = document.querySelector('#photo-grid__cell').content;
+    const card = document.querySelector('.photo-grid');
+    const cardElements = cardTamplate.querySelector('.photo-grid__cell').cloneNode(true);
+
+      cardElements.querySelector('.photo-grid__photo').src = srcForm;
+      cardElements.querySelector('.photo-grid__photo').alt = titleForm;
+      cardElements.querySelector('.photo-grid__title').textContent = titleForm;
+
+    card.prepend(cardElements);
+    popup.classList.remove('popup_opened');
   }else{
     popup.classList.remove('popup_opened');
   }
