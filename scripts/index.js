@@ -48,8 +48,11 @@ const cardElements = cardTamplate.querySelector('.photo-grid__cell').cloneNode(t
   cardElements.querySelector('.photo-grid__title').textContent = item.name;
 
   cardElements.querySelector('.photo-grid__like-button-image').addEventListener('click', () => {
-    cardElements.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active');
-  });
+  cardElements.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active')})
+  cardElements.querySelector('.photo-grid__delete-button').addEventListener('click', () => {
+  const deleteButton = cardElements.querySelector('.photo-grid__delete-button').closest('.photo-grid__cell')
+  deleteButton.remove();
+});
 
 
 card.append(cardElements);})
@@ -116,8 +119,11 @@ form.addEventListener('submit', evt => {
       cardElements.querySelector('.photo-grid__photo').alt = titleForm;
       cardElements.querySelector('.photo-grid__title').textContent = titleForm;
       cardElements.querySelector('.photo-grid__like-button-image').addEventListener('click', () => {
-        cardElements.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active');
-      })
+      cardElements.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active');})
+      cardElements.querySelector('.photo-grid__delete-button').addEventListener('click', () => {
+        const deleteButton = cardElements.querySelector('.photo-grid__delete-button').closest('.photo-grid__cell')
+        deleteButton.remove();
+      });
 
     card.prepend(cardElements);
     popup.classList.remove('popup_opened');
