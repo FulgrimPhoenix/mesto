@@ -1,6 +1,7 @@
-let editBottom = document.querySelector('.profile__button-image');
+const editBottom = document.querySelector('.profile__button-image');
+const addImage = document.querySelector('.profile__add-button-image');
 let popup = document.querySelector('.popup');
-let exitButton = document.querySelector('.popup__exit');
+const exitButton = document.querySelector('.popup__exit');
 let profileInfo = document.querySelector('.profile__cell');
 let saveButton = document.querySelector('.popup__save-button');
 let Name = document.querySelector('.profile__name');
@@ -36,7 +37,7 @@ const initialCards = [
   }
 ];
 
-initialCards.forEach((item, index) => {
+initialCards.forEach((item) => {
 const cardTamplate = document.querySelector('#photo-grid__cell').content;
 const card = document.querySelector('.photo-grid');
 const cardElements = cardTamplate.querySelector('.photo-grid__cell').cloneNode(true);
@@ -55,6 +56,8 @@ card.append(cardElements);})
   return
   }
 
+
+
   function closeEditWindow(){
     popup.classList.remove('popup_opened');
   return
@@ -72,9 +75,38 @@ card.append(cardElements);})
     return
   }
 
-editBottom.addEventListener('click', openEditWindow);
+editBottom.addEventListener('click', () => {
+  popup.classList.add('popup_opened');
+  popup.querySelector('.popup__title').textContent = 'Редактировать профиль';
+  inputFormName.setAttribute("placeholder", 'Введите имя');
+  inputFormSpeciality.setAttribute('placeholder', 'Введите специальность');
+  inputFormName.value = Name.textContent;
+  inputFormSpeciality.value = Speciality.textContent;
+  saveButton.textContent = 'Сохранить';
+});
+
+addImage.addEventListener('click', () => { 
+  popup.classList.add('popup_opened');
+  popup.querySelector('.popup__title').textContent = 'Новое место';
+  inputFormName.setAttribute("placeholder", 'Название');
+  inputFormSpeciality.setAttribute('placeholder', 'Ссылка на картинку');
+  inputFormName.value = '';
+  inputFormSpeciality.value = '';
+  saveButton.textContent = 'Создать';
+})
+
 exitButton.addEventListener('click', closeEditWindow);
-form.addEventListener('submit', saveChanges);
+form.addEventListener('submit', evt => {
+  evt.preventDefault();
+  if (saveButton.textContent === 'Сохранить'){
+    Name.textContent = inputFormName.value;
+    Speciality.textContent = inputFormSpeciality.value;
+    popup.classList.remove('popup_opened');
+    return
+  }else{
+    popup.classList.remove('popup_opened');
+  }
+});
 
 /*
 function likeActivate(){
