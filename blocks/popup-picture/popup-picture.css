@@ -7,7 +7,20 @@
   background-color: rgba(0, 0, 0, 0.9);
   top: 0;
   left: 0;
+  opacity: 0;
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+  animation: .4s appearance forwards;
+}
+
+@keyframes appearance {
+
+  form{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+
 }
