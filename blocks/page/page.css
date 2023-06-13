@@ -8,3 +8,23 @@
   font-family: "Inter", Arial, sans-serif;
   box-sizing: border-box;
 }
+
+@keyframes appearance {
+
+  form{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+
+}
+
+@keyframes disappearance{
+  form{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}

@@ -11,16 +11,5 @@
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  animation: .4s appearance forwards;
 }
 
-@keyframes appearance {
-
-  form{
-    opacity: 0;
-  }
-  to{
-    opacity: 1;
-  }
-
-}
