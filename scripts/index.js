@@ -51,8 +51,16 @@ const cardElements = cardTamplate.querySelector('.photo-grid__cell').cloneNode(t
   cardElements.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active')})
   cardElements.querySelector('.photo-grid__delete-button').addEventListener('click', () => {
   const deleteButton = cardElements.querySelector('.photo-grid__delete-button').closest('.photo-grid__cell')
-  deleteButton.remove();
+  deleteButton.remove();});
+  cardElements.querySelector('.photo-grid__photo').addEventListener('click', () => {
+  const popupPictureOpened = document.querySelector('.popup-picture');
+  popupPictureOpened.classList.toggle('popup-picture_opened');
+  popupPictureOpened.querySelector('.popup-picture__photo').src = item.link;
+  popupPictureOpened.querySelector('.popup-picture__photo').alt = item.name;
+  popupPictureOpened.querySelector('.popup-picture__title').textContent = item.name;
+  popupPictureOpened.querySelector('.popup-picture__exit').addEventListener('click', () => popupPictureOpened.classList.remove('popup-picture_opened'));
 });
+
 
 
 card.append(cardElements);})
@@ -123,6 +131,14 @@ form.addEventListener('submit', evt => {
       cardElements.querySelector('.photo-grid__delete-button').addEventListener('click', () => {
         const deleteButton = cardElements.querySelector('.photo-grid__delete-button').closest('.photo-grid__cell')
         deleteButton.remove();
+      });
+      cardElements.querySelector('.photo-grid__photo').addEventListener('click', () => {
+        const popupPictureOpened = document.querySelector('.popup-picture');
+        popupPictureOpened.classList.toggle('popup-picture_opened');
+        popupPictureOpened.querySelector('.popup-picture__photo').src = srcForm;
+        popupPictureOpened.querySelector('.popup-picture__photo').alt = titleForm;
+        popupPictureOpened.querySelector('.popup-picture__title').textContent = titleForm;
+        popupPictureOpened.querySelector('.popup-picture__exit').addEventListener('click', () => popupPictureOpened.classList.remove('popup-picture_opened'));
       });
 
     card.prepend(cardElements);
