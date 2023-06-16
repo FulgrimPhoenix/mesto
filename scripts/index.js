@@ -24,6 +24,8 @@ const ProfileSpeciality = profile.querySelector('.profile__info');
 let spaceForCards = document.querySelector('.photo-grid');
 const cardTamplate = document.querySelector('#photo-grid__cell').content;
 const cardElements = cardTamplate.querySelector('.photo-grid__cell');
+const fullScreenCardPhoto = popupPicture.querySelector('.popup-picture__photo');
+const fullScreenCardTitle = popupPicture.querySelector('.popup-picture__title');
 //начальные карточки
 const initialCards = [
   {
@@ -32,7 +34,7 @@ const initialCards = [
   },
   {
     name: 'Meme',
-    link: 'https://sun9-45.userapi.com/impg/6Es7L-JNXZsPKdlw-OtzChWoWge1jTckBKR8fg/ycv-Z_Bjl1Y.jpg?size=1280x809&quality=95&sign=d49090423d1ab93a22afeda8ed5d4af7&type=album'
+    link: 'https://sun9-3.userapi.com/impg/RHVCYNMze5PnemVReebnmvRnnAFO-NT4p7qNhw/B7FnsbeSJBQ.jpg?size=1280x1011&quality=95&sign=00ee9b0ec9a77280058dc034a2c2d831&type=album'
   },
   {
     name: 'Красотка',
@@ -82,18 +84,31 @@ function changeLikeStatus () {
 function deleteCard () {
   event.target.closest('.photo-grid__cell').remove();
 }
+//открытие полноэкранки
+function transformToFullscreenCard (photoLink, photoTitle){
+  fullScreenCardPhoto.src = photoLink;
+  fullScreenCardPhoto.alt = photoTitle;
+  fullScreenCardTitle.textContent = photoTitle;
+}
 //создание карточки
 function createCard (elem) {
   const newCard = cardElements.cloneNode(true);
   const newCardPhoto = newCard.querySelector('.photo-grid__photo');
   const newCardTitle = newCard.querySelector('.photo-grid__title');
+  const newCardLikeButton = newCard.querySelector('.photo-grid__like-button-image');
+  const newCardDeleteButton = newCard.querySelector('.photo-grid__delete-button');
   newCardPhoto.src = elem.link;
   newCardPhoto.alt = elem.name;
   newCardTitle.textContent = elem.name;
-  newCard.querySelector('.photo-grid__like-button-image').addEventListener('click', () => changeLikeStatus());
-  newCard.querySelector('.photo-grid__delete-button').addEventListener('click', () => deleteCard())
+  newCardLikeButton.addEventListener('click', () => changeLikeStatus());
+  newCardDeleteButton.addEventListener('click', () => deleteCard());
+  newCardPhoto.addEventListener('click', () => {
+    openPopup(popupPicture);
+    transformToFullscreenCard(elem.link, elem.name);})
   return newCard
-}
+  }
+
+
 //внешнее добавление карточек
 function addCard (cardName, cardLink) {
   let el = {}
