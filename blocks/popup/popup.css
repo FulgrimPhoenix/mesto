@@ -13,6 +13,7 @@
   justify-content: space-around;
   align-items: center;
   visibility: hidden;
-  transition: visibility 0.2s, opacity 0.2s ease-in;
+  opacity: 0;
+  transition: 0.2s ease-in;
 }
 

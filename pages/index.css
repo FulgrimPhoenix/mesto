@@ -31,15 +31,16 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__add-card-form/popup__add-card-form.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
+@import url(../blocks/popup/__create-button/popup__create-button.css);
 @import url(../blocks/popup/__exit/popup__exit.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/_closed/popup_closed.css);
 
 @import url(../blocks/popup-picture/popup-picture.css);
 @import url(../blocks/popup-picture/__container/popup-picture__container.css);
-@import url(../blocks/popup-picture/__exit/popup-picture__exit.css);
 @import url(../blocks/popup-picture/__photo/popup-picture__photo.css);
 @import url(../blocks/popup-picture/__title/popup-picture__title.css);
 @import url(../blocks/popup-picture/_opened/popup-picture_opened.css);
