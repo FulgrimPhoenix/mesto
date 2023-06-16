@@ -9,11 +9,10 @@
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 3;
-  display: none;
-  /*Прошу прощения, по поводу горизонтального скрола - я проверил сайт на 3х браузерах(edge, chrome, yandex) и ни в одном у меня на этом разрешении его не было. Старший студент
-   так же его не обнаружил. Я не могу отследить этот вопрос (возможно есть какая то спец методика), но на всякий случай задал бордер бокс блокам.*/
+  display: flex;
   justify-content: space-around;
   align-items: center;
-  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0.2s, opacity 0.2s ease-in;
 }
 
