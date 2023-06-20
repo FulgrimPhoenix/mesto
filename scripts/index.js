@@ -133,10 +133,12 @@ initialCards.forEach(item => spaceForCards.append(createCard(item)))
 formEditProfile.addEventListener('submit', (evt) => {
   evt.preventDefault();
   saveProfileChandes();
-  closePopup();
+  hideClosestPopup (event);
 });
 formAddCard.addEventListener('submit', evt => {
   evt.preventDefault();
   spaceForCards.prepend(createCard(addCard(formCardName.value, formCardReference.value)));
-  closePopup();
+  formCardName.value = '';
+  formCardReference.value = '';
+  hideClosestPopup (event);
 });
