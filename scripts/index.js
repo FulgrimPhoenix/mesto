@@ -19,9 +19,9 @@ const formProfileName = formEditProfile.querySelector('.popup__input_field_name'
 const formProfileSpeciality = formEditProfile.querySelector('.popup__input_field_speciality');
 //поля профиля
 const profileName = profile.querySelector('.profile__name');
-const ProfileSpeciality = profile.querySelector('.profile__info');
+const profileSpeciality = profile.querySelector('.profile__info');
 //карточки
-let spaceForCards = document.querySelector('.photo-grid');
+const spaceForCards = document.querySelector('.photo-grid');
 const cardTamplate = document.querySelector('#photo-grid__cell').content;
 const cardElements = cardTamplate.querySelector('.photo-grid__cell');
 const fullScreenCardPhoto = popupPicture.querySelector('.popup-picture__photo');
@@ -67,21 +67,23 @@ const initialCards = [
 ];
 //ФУНКЦИИ
 //откарытие попапа
-function openPopup (a) {
-  formProfileName.value = profileName.textContent;
-  formProfileSpeciality.value = ProfileSpeciality.textContent;
-  a.classList.add('popup_opened');
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
 }
 //Закрытие попапа
-function closePopup () {
-  event.target.closest('.popup').classList.remove('popup_opened');
+function closePopup (popup) {
+  popup.classList.remove('popup_opened');
+}
+//скрытие текущего попапа
+function hideClosestPopup (event) {
+  closePopup(event.target.closest('.popup'));
 }
 //лайк каточки
-function changeLikeStatus () {
+function changeLikeStatus (event) {
   event.target.closest('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active');
 }
 //удаление карточки
-function deleteCard () {
+function deleteCard (event) {
   event.target.closest('.photo-grid__cell').remove();
 }
 //открытие полноэкранки
@@ -100,8 +102,8 @@ function createCard (elem) {
   newCardPhoto.src = elem.link;
   newCardPhoto.alt = elem.name;
   newCardTitle.textContent = elem.name;
-  newCardLikeButton.addEventListener('click', () => changeLikeStatus());
-  newCardDeleteButton.addEventListener('click', () => deleteCard());
+  newCardLikeButton.addEventListener('click', () => changeLikeStatus(event));
+  newCardDeleteButton.addEventListener('click', () => deleteCard(event));
   newCardPhoto.addEventListener('click', () => {
     openPopup(popupPicture);
     transformToFullscreenCard(elem.link, elem.name);})
@@ -111,20 +113,22 @@ function createCard (elem) {
 
 //внешнее добавление карточек
 function addCard (cardName, cardLink) {
-  let el = {}
-  el.name = cardName;
-  el.link = cardLink;
-  return el
+  const el = {name: cardName, link: cardLink}
+  return el 
 }
 //редактирование профиля
 function saveProfileChandes (){
   profileName.textContent = formProfileName.value;
-  ProfileSpeciality.textContent = formProfileSpeciality.value;
+  profileSpeciality.textContent = formProfileSpeciality.value;
 }
 //ФУНКЦИОНАЛ
-editProfileButtonOpenPopup.addEventListener('click', () => openPopup(popupProfile));
+editProfileButtonOpenPopup.addEventListener('click', () => {
+  openPopup(popupProfile);
+  formProfileName.value = profileName.textContent;
+  formProfileSpeciality.value = profileSpeciality.textContent;
+});
 addCardButtonOpenPopup.addEventListener('click', () => openPopup(popupAddCard));
-exitButtons.forEach(item => {item.addEventListener('click', () => closePopup());})
+exitButtons.forEach(item => {item.addEventListener('click', () => hideClosestPopup (event));})
 initialCards.forEach(item => spaceForCards.append(createCard(item)))
 formEditProfile.addEventListener('submit', (evt) => {
   evt.preventDefault();
