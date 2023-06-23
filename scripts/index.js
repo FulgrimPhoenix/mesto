@@ -102,8 +102,8 @@ function createCard (elem) {
   newCardPhoto.src = elem.link;
   newCardPhoto.alt = elem.name;
   newCardTitle.textContent = elem.name;
-  newCardLikeButton.addEventListener('click', () => changeLikeStatus(event));
-  newCardDeleteButton.addEventListener('click', () => deleteCard(event));
+  newCardLikeButton.addEventListener('click', (event) => changeLikeStatus(event));
+  newCardDeleteButton.addEventListener('click', (event) => deleteCard(event));
   newCardPhoto.addEventListener('click', () => {
     openPopup(popupPicture);
     transformToFullscreenCard(elem.link, elem.name);})
@@ -128,17 +128,17 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
   formProfileSpeciality.value = profileSpeciality.textContent;
 });
 addCardButtonOpenPopup.addEventListener('click', () => openPopup(popupAddCard));
-exitButtons.forEach(item => {item.addEventListener('click', () => hideClosestPopup (event));})
+exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
 initialCards.forEach(item => spaceForCards.append(createCard(item)))
 formEditProfile.addEventListener('submit', (evt) => {
   evt.preventDefault();
   saveProfileChandes();
-  hideClosestPopup (event);
+  hideClosestPopup (evt);
 });
 formAddCard.addEventListener('submit', evt => {
   evt.preventDefault();
   spaceForCards.prepend(createCard(addCard(formCardName.value, formCardReference.value)));
   formCardName.value = '';
   formCardReference.value = '';
-  hideClosestPopup (event);
+  hideClosestPopup (evt);
 });
