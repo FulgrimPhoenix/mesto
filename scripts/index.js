@@ -9,14 +9,14 @@ const popupPicture = document.querySelector('.popup-picture');
 const exitButtons = document.querySelectorAll('.popup__exit');
 const editProfileButtonOpenPopup = profile.querySelector('.profile__button-image');
 const addCardButtonOpenPopup = profile.querySelector('.profile__add-button-image');
-const createCardButton = document.querySelector('.popup__create-button');
+const createCardButton = document.querySelector('.form__submit_create-button');
 //формы
 const formAddCard = document.querySelector('.popup__add-card-form');
 const formCardName = formAddCard.querySelector('.popup__input_field_title');
 const formCardReference = formAddCard.querySelector('.popup__input_field_link');
-const formEditProfile = document.querySelector('.popup__form');
-const formProfileName = formEditProfile.querySelector('.popup__input_field_name');
-const formProfileSpeciality = formEditProfile.querySelector('.popup__input_field_speciality');
+const formEditProfile = document.querySelector('.form__profile');
+const formProfileName = formEditProfile.querySelector('.form__input_field_name');
+const formProfileSpeciality = formEditProfile.querySelector('.form__input_field_speciality');
 //поля профиля
 const profileName = profile.querySelector('.profile__name');
 const profileSpeciality = profile.querySelector('.profile__info');
@@ -121,7 +121,40 @@ function saveProfileChandes (){
   profileName.textContent = formProfileName.value;
   profileSpeciality.textContent = formProfileSpeciality.value;
 }
+//
+const forms = document.querySelectorAll('.form');
+//показать ошибку валидации
+function showInputError(currentForm, currentInput, errorMessage){
+  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
+  currentInput.classList.add('form__input_validation_error');
+  errorSpan.textContent = errorMessage;
+  errorSpan.classList.add('form__input-error_active');
+}
+//скрыть ошибку валидации
+function hideInputError (currentForm, currentInput){
+  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
+  currentInput.classList.remove('form__input_validation_error');
+  errorSpan.textContent = '';
+  errorSpan.classList.remove('form__input-error_active');
+}
+
 //ФУНКЦИОНАЛ
+function validation (currentForm, currentInput){
+  if (!currentInput.validity.valid){
+    showInputError(currentForm, currentInput, currentInput.validationMessage);
+  }else{
+    hideInputError(currentForm, currentInput);
+  }
+}
+
+forms.forEach((currentForm)=>{
+  const inputList = currentForm.querySelectorAll('.form__input');
+  inputList.forEach((currentInput)=>{
+    console.log(currentForm, currentInput)
+    currentInput.addEventListener('input', () => validation(currentForm, currentInput));
+  })
+})
+
 editProfileButtonOpenPopup.addEventListener('click', () => {
   openPopup(popupProfile);
   formProfileName.value = profileName.textContent;
@@ -142,3 +175,4 @@ formAddCard.addEventListener('submit', evt => {
   formCardReference.value = '';
   hideClosestPopup (evt);
 });
+

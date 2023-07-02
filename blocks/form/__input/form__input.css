@@ -1,7 +1,6 @@
-.popup__input{
-  padding: 0;
-  box-sizing: border-box;
-  margin: 23px 0 0;
+.form__input{
+  padding: 0 0 0;
+  margin: 5px 0 0;
   display: block;
   width: 100%;
   border: none;
@@ -11,11 +10,12 @@
   border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
-.popup__input:first-child{
+.form__input:first-child{
   margin: 0;
+  padding: 0;
 }
 
-.popup__input::placeholder{
+.form__input::placeholder{
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -24,13 +24,13 @@
   color: #000000;
 }
 
-.popup__input:focus{
+.form__input:focus{
+  box-shadow: 0 0px 5px 1px #000;
   outline: none;
-  border: 2px solid #000;
   border-radius: 2px;
 }
 
-.popup__input:-webkit-input-placeholder{
+.form__input:-webkit-input-placeholder{
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -39,7 +39,7 @@
   color: #000000;
 }
 
-.popup__input:-moz-placeholder{
+.form__input:-moz-placeholder{
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -48,7 +48,7 @@
   color: #000000;
 }
 
-.popup__input:-ms-input-placeholder{
+.form__input:-ms-input-placeholder{
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -57,9 +57,3 @@
   color: #000000;
 }
 
-@media screen and (min-width: 880px) {
-  .popup__input{
-    margin: 23px 0 0;
-  }
-  
-}
