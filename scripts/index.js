@@ -11,7 +11,7 @@ const editProfileButtonOpenPopup = profile.querySelector('.profile__button-image
 const addCardButtonOpenPopup = profile.querySelector('.profile__add-button-image');
 const createCardButton = document.querySelector('.form__submit_create-button');
 //формы
-const formAddCard = document.querySelector('.popup__add-card-form');
+const formAddCard = document.querySelector('.form__add-card');
 const formCardName = formAddCard.querySelector('.popup__input_field_title');
 const formCardReference = formAddCard.querySelector('.popup__input_field_link');
 const formEditProfile = document.querySelector('.form__profile');
@@ -138,6 +138,19 @@ function hideInputError (currentForm, currentInput){
   errorSpan.classList.remove('form__input-error_active');
 }
 
+function inputCheck(inputList){
+  return inputList.some((currentInput) => {
+    return !currentInput.validity.valid
+  })
+}
+function submitToggle(currentForm, inputList){
+  if (inputCheck(inputList)){
+    currentForm.querySelector('.form__submit').setAttribute('disabled','disabled');
+  }else{
+    currentForm.querySelector('.form__submit').removeAttribute('disabled','disabled')
+  }
+}
+
 //ФУНКЦИОНАЛ
 function validation (currentForm, currentInput){
   if (!currentInput.validity.valid){
@@ -148,10 +161,13 @@ function validation (currentForm, currentInput){
 }
 
 forms.forEach((currentForm)=>{
-  const inputList = currentForm.querySelectorAll('.form__input');
+  const inputList = Array.from(currentForm.querySelectorAll('.form__input'));
+  submitToggle(currentForm, inputList);
   inputList.forEach((currentInput)=>{
-    console.log(currentForm, currentInput)
-    currentInput.addEventListener('input', () => validation(currentForm, currentInput));
+    currentInput.addEventListener('input', () => {
+      validation(currentForm, currentInput);
+      submitToggle(currentForm, inputList);
+    });
   })
 })
 
