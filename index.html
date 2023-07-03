@@ -46,9 +46,9 @@
         <button type="button" class="popup__exit"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="form popup__profile" name="popup__profile" novalidate>
-          <input type="text" id="field-name" class="form__input form__input_field_name" placeholder="Введите имя" required minlength="2" maxlength="40">
+          <input type="text" id="field-name" class="form__input form__input_field_name popup__input" placeholder="Введите имя" required minlength="2" maxlength="40">
           <span class="form__input-error field-name-error"></span>
-          <input type="text" id="field-speciality" class="form__input form__input_field_speciality" placeholder="Введите специальность" required minlength="2" maxlength="200">
+          <input type="text" id="field-speciality" class="form__input form__input_field_speciality popup__input" placeholder="Введите специальность" required minlength="2" maxlength="200">
           <span class="form__input-error field-speciality-error"></span>
           <button type="submit" class="form__submit form__submit_save-button">Сохранить</button>
         </form>
@@ -59,9 +59,9 @@
         <button type="button" class="popup__exit"></button>
         <h2 class="popup__title">Новое место</h2>
         <form class="form popup__add-card" name="popup__add-card-form" novalidate>
-          <input type="text" id="field-title" class="form__input popup__input_field_title" placeholder="Название" required minlength="2" maxlength="30">
+          <input type="text" id="field-title" class="form__input popup__input form__input_field_title" placeholder="Название" required minlength="2" maxlength="30">
           <span class="form__input-error field-title-error"></span>
-          <input type="url" id="field-url" class="form__input popup__input_field_link" placeholder="Ссылка на картинку" required>
+          <input type="url" id="field-url" class="form__input popup__input form__input_field_link popup__input" placeholder="Ссылка на картинку" required>
           <span class="form__input-error field-url-error"></span>
           <button type="submit" class="form__submit form__submit_create-button">Создать</button>
         </form>
