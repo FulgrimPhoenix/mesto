@@ -11,10 +11,10 @@ const editProfileButtonOpenPopup = profile.querySelector('.profile__button-image
 const addCardButtonOpenPopup = profile.querySelector('.profile__add-button-image');
 const createCardButton = document.querySelector('.form__submit_create-button');
 //формы
-const formAddCard = document.querySelector('.form__add-card');
+const formAddCard = document.querySelector('.popup__add-card');
 const formCardName = formAddCard.querySelector('.popup__input_field_title');
 const formCardReference = formAddCard.querySelector('.popup__input_field_link');
-const formEditProfile = document.querySelector('.form__profile');
+const formEditProfile = document.querySelector('.popup__profile');
 const formProfileName = formEditProfile.querySelector('.form__input_field_name');
 const formProfileSpeciality = formEditProfile.querySelector('.form__input_field_speciality');
 //поля профиля
