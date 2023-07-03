@@ -150,7 +150,9 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
 });
 addCardButtonOpenPopup.addEventListener('click', () => {
   const popup = popupAddCard;
-  openPopup(popup)
+  openPopup(popup);
+  formCardName.value = '';
+  formCardReference.value = '';
   document.addEventListener('keydown', (event) => addKeyboardListener(popup, event));
 });
 exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
