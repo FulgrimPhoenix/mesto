@@ -20,6 +20,8 @@ const formProfileSpeciality = formEditProfile.querySelector('.form__input_field_
 //поля профиля
 const profileName = profile.querySelector('.profile__name');
 const profileSpeciality = profile.querySelector('.profile__info');
+formProfileName.value = profileName.textContent;
+formProfileSpeciality.value = profileSpeciality.textContent;
 //карточки
 const spaceForCards = document.querySelector('.photo-grid');
 const cardTamplate = document.querySelector('#photo-grid__cell').content;
@@ -121,56 +123,7 @@ function saveProfileChandes (){
   profileName.textContent = formProfileName.value;
   profileSpeciality.textContent = formProfileSpeciality.value;
 }
-//
-const forms = document.querySelectorAll('.form');
-//показать ошибку валидации
-function showInputError(currentForm, currentInput, errorMessage){
-  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
-  currentInput.classList.add('form__input_validation_error');
-  errorSpan.textContent = errorMessage;
-  errorSpan.classList.add('form__input-error_active');
-}
-//скрыть ошибку валидации
-function hideInputError (currentForm, currentInput){
-  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
-  currentInput.classList.remove('form__input_validation_error');
-  errorSpan.textContent = '';
-  errorSpan.classList.remove('form__input-error_active');
-}
-
-function inputCheck(inputList){
-  return inputList.some((currentInput) => {
-    return !currentInput.validity.valid
-  })
-}
-function submitToggle(currentForm, inputList){
-  if (inputCheck(inputList)){
-    currentForm.querySelector('.form__submit').setAttribute('disabled','disabled');
-  }else{
-    currentForm.querySelector('.form__submit').removeAttribute('disabled','disabled')
-  }
-}
-
 //ФУНКЦИОНАЛ
-function validation (currentForm, currentInput){
-  if (!currentInput.validity.valid){
-    showInputError(currentForm, currentInput, currentInput.validationMessage);
-  }else{
-    hideInputError(currentForm, currentInput);
-  }
-}
-
-forms.forEach((currentForm)=>{
-  const inputList = Array.from(currentForm.querySelectorAll('.form__input'));
-  submitToggle(currentForm, inputList);
-  inputList.forEach((currentInput)=>{
-    currentInput.addEventListener('input', () => {
-      validation(currentForm, currentInput);
-      submitToggle(currentForm, inputList);
-    });
-  })
-})
-
 editProfileButtonOpenPopup.addEventListener('click', () => {
   openPopup(popupProfile);
   formProfileName.value = profileName.textContent;

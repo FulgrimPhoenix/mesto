@@ -21,14 +21,6 @@
   opacity: .8;
 }
 
-.form__submit:disabled{
-  border-radius: 2px;
-  border: 1px solid rgba(0, 0, 0, .2);
-  color: rgba(0, 0, 0, .2);
-  background-color: #fff;
-  pointer-events: none;
-}
-
 @media screen and (min-width: 880px) {
   .form__submit{
     font-size: 18px;
