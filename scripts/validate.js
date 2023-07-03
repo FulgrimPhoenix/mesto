@@ -1,4 +1,3 @@
-const forms = document.querySelectorAll('.form');
 //проверка валидности каждого инпута
 function inputCheck(inputList){
   inputListArray = Array.from(inputList);
@@ -6,10 +5,19 @@ function inputCheck(inputList){
     return (!item.validity.valid)
   })
 }
-
-//
-function showInputError(currentForm, currentInput, errorMessage){
-
+//показать ошибку валидации
+function showInputError(currentForm, currentInput, errorMessage, textErrorVision, inputErrorMarker){
+  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
+  currentInput.classList.add(inputErrorMarker);
+  errorSpan.textContent = errorMessage;
+  errorSpan.classList.add(textErrorVision);
+}
+//скрыть ошибку валидации
+function hideInputError (currentForm, currentInput, textErrorVision, inputErrorMarker){
+  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
+  currentInput.classList.remove(inputErrorMarker);
+  errorSpan.textContent = '';
+  errorSpan.classList.remove(textErrorVision);
 }
 //состояние сабмита
 function submitToggle(inputList, currentButton, errorMarker){
@@ -21,36 +29,33 @@ function submitToggle(inputList, currentButton, errorMarker){
   }
 }
 //валидация инпута
-function validation (currentForm, currentInput){
+function validation (currentForm, currentInput, textErrorVision, inputErrorMarker){
   if (!currentInput.validity.valid){
-    showInputError(currentForm, currentInput, currentInput.validationMessage);
+    showInputError(currentForm, currentInput, currentInput.validationMessage, textErrorVision, inputErrorMarker);
   }else{
-    hideInputError(currentForm, currentInput);
+    hideInputError(currentForm, currentInput, textErrorVision, inputErrorMarker);
   }
 }
 
 //ФУНКЦИОНАЛ
 function enableValidation(parametres){
-  parametres.formSelector.forEach((currentForm)=>{
+  document.querySelectorAll(parametres.formSelector).forEach((currentForm)=>{
     const inputList = Array.from(currentForm.querySelectorAll(parametres.inputSelector));
     const currentButton = currentForm.querySelector(parametres.submitButtonSelector);
     submitToggle(inputList, currentButton, parametres.inactiveButtonClass);
     inputList.forEach((currentInput)=>{
       currentInput.addEventListener('input', () => {
-        validation(currentForm, currentInput);
+        validation(currentForm, currentInput, parametres.inputErrorClass, parametres.errorClass);
         submitToggle(inputList, currentButton, parametres.inactiveButtonClass);
       });
     })
   });
 }
-const a = {
+enableValidation({
   formSelector: 'form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__submit',
-  inactiveButtonClass: '.form__submit_disbled',
-  inputErrorClass: '.form__input-error_active',
-};
-
-console.log(a.formSelector)
-
-//formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass
+  inactiveButtonClass: 'form__submit_disabled',
+  inputErrorClass: 'form__input-error_active',
+  errorClass: 'form__input_validation_error'
+});

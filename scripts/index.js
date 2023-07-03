@@ -107,8 +107,11 @@ function createCard (elem) {
   newCardLikeButton.addEventListener('click', (event) => changeLikeStatus(event));
   newCardDeleteButton.addEventListener('click', (event) => deleteCard(event));
   newCardPhoto.addEventListener('click', () => {
-    openPopup(popupPicture);
-    transformToFullscreenCard(elem.link, elem.name);})
+    const popup = popupPicture;
+    openPopup(popup);
+    transformToFullscreenCard(elem.link, elem.name);
+    document.addEventListener('keydown', (event) => addKeyboardListener(popup, event))
+  })
   return newCard
   }
 
@@ -123,13 +126,33 @@ function saveProfileChandes (){
   profileName.textContent = formProfileName.value;
   profileSpeciality.textContent = formProfileSpeciality.value;
 }
+//добавление слушателя escape
+function addKeyboardListener(popup, event){
+    if (event.key === 'Escape'){
+      closePopup (popup);
+      document.removeEventListener('keydown', (event) => addKeyboardListener(popup, event));
+}}
 //ФУНКЦИОНАЛ
+popups.forEach((item) => {
+  item.addEventListener('click', (event)=>{
+    if (event.target.classList.contains('popup')){
+      hideClosestPopup (event);
+    }
+  });
+})
+
 editProfileButtonOpenPopup.addEventListener('click', () => {
-  openPopup(popupProfile);
+  const popup = popupProfile;
+  openPopup(popup);
+  document.addEventListener('keydown', (event) => addKeyboardListener(popup, event));
   formProfileName.value = profileName.textContent;
   formProfileSpeciality.value = profileSpeciality.textContent;
 });
-addCardButtonOpenPopup.addEventListener('click', () => openPopup(popupAddCard));
+addCardButtonOpenPopup.addEventListener('click', () => {
+  const popup = popupAddCard;
+  openPopup(popup)
+  document.addEventListener('keydown', (event) => addKeyboardListener(popup, event));
+});
 exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
 initialCards.forEach(item => spaceForCards.append(createCard(item)))
 formEditProfile.addEventListener('submit', (evt) => {
