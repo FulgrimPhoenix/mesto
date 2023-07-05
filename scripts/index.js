@@ -3,13 +3,14 @@ const profile = document.querySelector('.profile');
 //попапы
 const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('.popup-prifile');
-const popupAddCard = document.querySelector('.popup-add-card');
+const popupaddCard = document.querySelector('.popup-add-card');
 const popupPicture = document.querySelector('.popup-picture');
 //кнопки
 const exitButtons = document.querySelectorAll('.popup__exit');
 const editProfileButtonOpenPopup = profile.querySelector('.profile__button-image');
 const addCardButtonOpenPopup = profile.querySelector('.profile__add-button-image');
 const createCardButton = document.querySelector('.form__submit_create-button');
+const inactiveButtonClass = 'form__submit_disabled';
 //формы
 const formAddCard = document.querySelector('.popup__add-card');
 const formCardName = formAddCard.querySelector('.form__input_field_title');
@@ -36,7 +37,7 @@ const initialCards = [
   },
   {
     name: 'Meme',
-    link: 'https://sun9-3.userapi.com/impg/RHVCYNMze5PnemVReebnmvRnnAFO-NT4p7qNhw/B7FnsbeSJBQ.jpg?size=1280x1011&quality=95&sign=00ee9b0ec9a77280058dc034a2c2d831&type=album'
+    link: 'https://sun9-37.userapi.com/impg/g9rioXRJgbI4-GHOw_bQHnBYWn6rYcXNDu8Qvg/rniLcSmXfo8.jpg?size=1500x1500&quality=95&sign=ee43bbe862665114551d77be471f8beb&type=album'
   },
   {
     name: 'Красотка',
@@ -71,10 +72,12 @@ const initialCards = [
 //откарытие попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEsc);
 }
 //Закрытие попапа
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 //скрытие текущего попапа
 function hideClosestPopup (event) {
@@ -110,16 +113,14 @@ function createCard (elem) {
     const popup = popupPicture;
     openPopup(popup);
     transformToFullscreenCard(elem.link, elem.name);
-    document.addEventListener('keydown', (event) => addKeyboardListener(popup, event))
   })
   return newCard
   }
 
 
 //внешнее добавление карточек
-function addCard (cardName, cardLink) {
-  const el = {name: cardName, link: cardLink}
-  return el 
+function createCardData(cardName, cardLink) {
+  return { name: cardName, link: cardLink }
 }
 //редактирование профиля
 function saveProfileChandes (){
@@ -127,46 +128,43 @@ function saveProfileChandes (){
   profileSpeciality.textContent = formProfileSpeciality.value;
 }
 //добавление слушателя escape
-function addKeyboardListener(popup, event){
+function closePopupByEsc(event){
     if (event.key === 'Escape'){
-      closePopup (popup);
-      document.removeEventListener('keydown', (event) => addKeyboardListener(popup, event));
+      closePopup(document.querySelector('.popup_opened'));
 }}
+//состояние сабмита. Я пытался импортировать эту функцию из validate, но если я правильно понял - бразер отказывается ссылаться на скрипты без http/https, так что импорты нге работают.
+function switchingOffButton(currentButton, errorMarker){
+  currentButton.classList.add(errorMarker);
+  currentButton.setAttribute("disabled", "disabled");
+}
 //ФУНКЦИОНАЛ
 popups.forEach((item) => {
   item.addEventListener('click', (event)=>{
     if (event.target.classList.contains('popup')){
-      hideClosestPopup (event);
+      closePopup(item);
     }
   });
 })
-
 editProfileButtonOpenPopup.addEventListener('click', () => {
-  const popup = popupProfile;
-  openPopup(popup);
-  document.addEventListener('keydown', (event) => addKeyboardListener(popup, event));
+  openPopup(popupProfile);
   formProfileName.value = profileName.textContent;
   formProfileSpeciality.value = profileSpeciality.textContent;
 });
 addCardButtonOpenPopup.addEventListener('click', () => {
-  const popup = popupAddCard;
-  openPopup(popup);
+  openPopup(popupaddCard);
   formCardName.value = '';
   formCardReference.value = '';
-  document.addEventListener('keydown', (event) => addKeyboardListener(popup, event));
 });
 exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
 initialCards.forEach(item => spaceForCards.append(createCard(item)))
-formEditProfile.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+formEditProfile.addEventListener('submit', (event) => {
+  event.preventDefault();
   saveProfileChandes();
-  hideClosestPopup (evt);
+  hideClosestPopup (event);
 });
-formAddCard.addEventListener('submit', evt => {
-  evt.preventDefault();
-  spaceForCards.prepend(createCard(addCard(formCardName.value, formCardReference.value)));
-  formCardName.value = '';
-  formCardReference.value = '';
-  hideClosestPopup (evt);
+formAddCard.addEventListener('submit', event => {
+  event.preventDefault();
+  spaceForCards.prepend(createCard(createCardData(formCardName.value, formCardReference.value)));
+  switchingOffButton(createCardButton, inactiveButtonClass);
+  hideClosestPopup (event);
 });
-

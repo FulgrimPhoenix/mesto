@@ -1,6 +1,6 @@
 //проверка валидности каждого инпута
-function inputCheck(inputList){
-  inputListArray = Array.from(inputList);
+function hasInvalidInput(inputList){
+  const inputListArray = Array.from(inputList);
   return inputListArray.some((item) => {
     return (!item.validity.valid)
   })
@@ -20,12 +20,19 @@ function hideInputError (currentForm, currentInput, textErrorVision, inputErrorM
   errorSpan.classList.remove(textErrorVision);
 }
 //состояние сабмита
-function submitToggle(inputList, currentButton, errorMarker){
-  inputListArray = Array.from(inputList);
-  if (inputCheck(inputListArray)){
-    currentButton.classList.add(errorMarker);
+function switchingOffButton(currentButton, errorMarker){
+  currentButton.classList.add(errorMarker);
+  currentButton.setAttribute("disabled", "disabled");
+}
+function switchingOnButton(currentButton, errorMarker){
+  currentButton.classList.remove(errorMarker);
+  currentButton.removeAttribute("disabled", "disabled");
+}
+function toggleSubmit(inputList, currentButton, errorMarker){
+  if (hasInvalidInput(inputList)){
+    switchingOffButton(currentButton, errorMarker);
   }else{
-    currentButton.classList.remove(errorMarker);
+    switchingOnButton(currentButton, errorMarker);
   }
 }
 //валидация инпута
@@ -42,11 +49,11 @@ function enableValidation(parametres){
   document.querySelectorAll(parametres.formSelector).forEach((currentForm)=>{
     const inputList = Array.from(currentForm.querySelectorAll(parametres.inputSelector));
     const currentButton = currentForm.querySelector(parametres.submitButtonSelector);
-    submitToggle(inputList, currentButton, parametres.inactiveButtonClass);
+    toggleSubmit(inputList, currentButton, parametres.inactiveButtonClass);
     inputList.forEach((currentInput)=>{
       currentInput.addEventListener('input', () => {
         validation(currentForm, currentInput, parametres.inputErrorClass, parametres.errorClass);
-        submitToggle(inputList, currentButton, parametres.inactiveButtonClass);
+        toggleSubmit(inputList, currentButton, parametres.inactiveButtonClass);
       });
     })
   });
