@@ -1,23 +1,31 @@
+import Card from './card.js'
+import FormValidator from './validate.js'
+
 //ПЕРЕМЕННЫЕ
+const parametres = {
+  formSelector: 'form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__submit',
+  inactiveButtonClass: 'form__submit_disabled',
+  inputErrorClass: 'form__input-error_active',
+  errorClass: 'form__input_validation_error'
+}
 const profile = document.querySelector('.profile');
 //попапы
 const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('.popup-prifile');
-const popupaddCard = document.querySelector('.popup-add-card');
-const popupPicture = document.querySelector('.popup-picture');
+const popupAddCard = document.querySelector('.popup-add-card');
 //кнопки
 const exitButtons = document.querySelectorAll('.popup__exit');
 const editProfileButtonOpenPopup = profile.querySelector('.profile__button-image');
 const addCardButtonOpenPopup = profile.querySelector('.profile__add-button-image');
-const createCardButton = document.querySelector('.form__submit_create-button');
-const inactiveButtonClass = 'form__submit_disabled';
+const saveProfileChandesButton = document.querySelector('.form__submit_save-button')
 //формы
-const formAddCard = document.querySelector('.popup__add-card');
-const formCardName = formAddCard.querySelector('.form__input_field_title');
-const formCardReference = formAddCard.querySelector('.form__input_field_link');
+const forms = document.querySelectorAll('.form')
+const formAddCard = document.querySelector('.form__add-card');
 const formEditProfile = document.querySelector('.popup__profile');
-const formProfileName = formEditProfile.querySelector('.form__input_field_name');
-const formProfileSpeciality = formEditProfile.querySelector('.form__input_field_speciality');
+const formProfileName = document.querySelector('.form__input_field_name');
+const formProfileSpeciality = document.querySelector('.form__input_field_speciality');
 //поля профиля
 const profileName = profile.querySelector('.profile__name');
 const profileSpeciality = profile.querySelector('.profile__info');
@@ -25,10 +33,6 @@ formProfileName.value = profileName.textContent;
 formProfileSpeciality.value = profileSpeciality.textContent;
 //карточки
 const spaceForCards = document.querySelector('.photo-grid');
-const cardTamplate = document.querySelector('#photo-grid__cell').content;
-const cardElements = cardTamplate.querySelector('.photo-grid__cell');
-const fullScreenCardPhoto = popupPicture.querySelector('.popup-picture__photo');
-const fullScreenCardTitle = popupPicture.querySelector('.popup-picture__title');
 //начальные карточки
 const initialCards = [
   {
@@ -83,45 +87,9 @@ function closePopup (popup) {
 function hideClosestPopup (event) {
   closePopup(event.target.closest('.popup'));
 }
-//лайк каточки
-function changeLikeStatus (event) {
-  event.target.closest('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active');
-}
-//удаление карточки
-function deleteCard (event) {
-  event.target.closest('.photo-grid__cell').remove();
-}
-//открытие полноэкранки
-function transformToFullscreenCard (photoLink, photoTitle){
-  fullScreenCardPhoto.src = photoLink;
-  fullScreenCardPhoto.alt = photoTitle;
-  fullScreenCardTitle.textContent = photoTitle;
-}
-//создание карточки
-function createCard (elem) {
-  const newCard = cardElements.cloneNode(true);
-  const newCardPhoto = newCard.querySelector('.photo-grid__photo');
-  const newCardTitle = newCard.querySelector('.photo-grid__title');
-  const newCardLikeButton = newCard.querySelector('.photo-grid__like-button-image');
-  const newCardDeleteButton = newCard.querySelector('.photo-grid__delete-button');
-  newCardPhoto.src = elem.link;
-  newCardPhoto.alt = elem.name;
-  newCardTitle.textContent = elem.name;
-  newCardLikeButton.addEventListener('click', (event) => changeLikeStatus(event));
-  newCardDeleteButton.addEventListener('click', (event) => deleteCard(event));
-  newCardPhoto.addEventListener('click', () => {
-    const popup = popupPicture;
-    openPopup(popup);
-    transformToFullscreenCard(elem.link, elem.name);
-  })
-  return newCard
-  }
 
 
-//внешнее добавление карточек
-function createCardData(cardName, cardLink) {
-  return { name: cardName, link: cardLink }
-}
+
 //редактирование профиля
 function saveProfileChandes (){
   profileName.textContent = formProfileName.value;
@@ -150,21 +118,53 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
   formProfileName.value = profileName.textContent;
   formProfileSpeciality.value = profileSpeciality.textContent;
 });
+
+formEditProfile.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  saveProfileChandes();
+  hideClosestPopup (evt);
+
+});
+
 addCardButtonOpenPopup.addEventListener('click', () => {
-  openPopup(popupaddCard);
+  openPopup(popupAddCard);
   formCardName.value = '';
   formCardReference.value = '';
 });
+
 exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
-initialCards.forEach(item => spaceForCards.append(createCard(item)))
-formEditProfile.addEventListener('submit', (event) => {
-  event.preventDefault();
-  saveProfileChandes();
-  hideClosestPopup (event);
+
+initialCards.forEach(item => {
+  const CardCreater = new Card('#photo-grid__cell', item);
+  const newCardElement = CardCreater.generateCard();
+
+  spaceForCards.append(newCardElement)
+})
+
+document.querySelector('.popup__add-card').addEventListener('submit', evt => {
+  evt.preventDefault();
+  const formCardName = formAddCard.querySelector('.popup__input_field_title');
+  const formCardReference = formAddCard.querySelector('.popup__input_field_link');
+  const data = {
+    name: `${formCardName.value}`,
+    link: `${formCardReference.value}`
+  };
+
+  const CardCreater = new Card('#photo-grid__cell', data);
+  const newCardElement = CardCreater.generateCard();
+
+  formCardName.value = '';
+  formCardReference.value = '';
+
+  spaceForCards.prepend(newCardElement);
+  hideClosestPopup (evt);
 });
-formAddCard.addEventListener('submit', event => {
-  event.preventDefault();
-  spaceForCards.prepend(createCard(createCardData(formCardName.value, formCardReference.value)));
-  switchingOffButton(createCardButton, inactiveButtonClass);
-  hideClosestPopup (event);
-});
+
+
+forms.forEach(item => {
+  const currentForm = new FormValidator(parametres, item)
+  currentForm.enableValidation()
+})
+
+
+

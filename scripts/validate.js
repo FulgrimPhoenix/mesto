@@ -1,68 +1,74 @@
-//проверка валидности каждого инпута
-function hasInvalidInput(inputList){
-  const inputListArray = Array.from(inputList);
-  return inputListArray.some((item) => {
-    return (!item.validity.valid)
-  })
-}
-//показать ошибку валидации
-function showInputError(currentForm, currentInput, errorMessage, textErrorVision, inputErrorMarker){
-  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
-  currentInput.classList.add(inputErrorMarker);
-  errorSpan.textContent = errorMessage;
-  errorSpan.classList.add(textErrorVision);
-}
-//скрыть ошибку валидации
-function hideInputError (currentForm, currentInput, textErrorVision, inputErrorMarker){
-  const errorSpan = currentForm.querySelector(`.${currentInput.id}-error`);
-  currentInput.classList.remove(inputErrorMarker);
-  errorSpan.textContent = '';
-  errorSpan.classList.remove(textErrorVision);
-}
-//состояние сабмита
-function switchingOffButton(currentButton, errorMarker){
-  currentButton.classList.add(errorMarker);
-  currentButton.setAttribute("disabled", "disabled");
-}
-function switchingOnButton(currentButton, errorMarker){
-  currentButton.classList.remove(errorMarker);
-  currentButton.removeAttribute("disabled", "disabled");
-}
-function toggleSubmit(inputList, currentButton, errorMarker){
-  if (hasInvalidInput(inputList)){
-    switchingOffButton(currentButton, errorMarker);
-  }else{
-    switchingOnButton(currentButton, errorMarker);
+class FormValidator{
+  constructor(parametres, currentForm){
+    this._currentForm = currentForm;
+    this._formSelector = parametres.formSelector;
+    this._inputSelector = parametres.inputSelector;
+    this._submitButtonSelector = parametres.submitButtonSelector;
+    this._inactiveButtonClass = parametres.inactiveButtonClass;
+    this._inputErrorClass = parametres.inputErrorClass;
+    this._errorClass = parametres.errorClass;
   }
-}
-//валидация инпута
-function validation (currentForm, currentInput, textErrorVision, inputErrorMarker){
-  if (!currentInput.validity.valid){
-    showInputError(currentForm, currentInput, currentInput.validationMessage, textErrorVision, inputErrorMarker);
-  }else{
-    hideInputError(currentForm, currentInput, textErrorVision, inputErrorMarker);
+  //показать ошибку валидации
+  _showInputError(item){
+      const errorSpan = this._currentForm.querySelector(`.${item.id}-error`);
+      item.classList.add(this._errorClass);
+      errorSpan.textContent = item.validationMessage;
+      errorSpan.classList.add(this._inputErrorClass);
+  }
+  //скрыть ошибку валидации
+  _hideInputError(item){
+      const errorSpan = this._currentForm.querySelector(`.${item.id}-error`);
+      item.classList.remove(this._errorClass);
+      errorSpan.textContent = '';
+      errorSpan.classList.remove(this._inputErrorClass);
+  }
+  //проверка инпута
+  _validation (item){
+    if (!item.validity.valid){
+      this._showInputError(item);
+    }else{
+      this._hideInputError(item);
+    }
+  }
+  //список инпутов данной формы
+  _getInputList(){
+    this._inputList = Array.from(this._currentForm.querySelectorAll(this._inputSelector));
+
+    return this._inputList
+  }
+  //проверка инпутов формы на валидность
+  _hasInvalidInput(){
+    return this._getInputList().some((item) => {
+      return (!item.validity.valid)
+    })
+  }
+  //включить кнопку
+  _switchingOffButton(){
+    this._currentForm.querySelector(this._submitButtonSelector).classList.add(this._inactiveButtonClass);
+    this._currentForm.querySelector(this._submitButtonSelector).setAttribute("disabled", "disabled");
+  }
+  //выключить кнопку
+  _switchingOnButton(){
+    this._currentForm.querySelector(this._submitButtonSelector).classList.remove(this._inactiveButtonClass);
+    this._currentForm.querySelector(this._submitButtonSelector).removeAttribute("disabled", "disabled");
+  }
+  //анализатор состояния формы
+  _toggleSubmit(){
+    if (this._hasInvalidInput()){
+      this._switchingOffButton();
+    }else{
+      this._switchingOnButton();
+    }
+  }
+  //активация валидации
+  enableValidation(){
+    this._getInputList().forEach(item => {
+      item.addEventListener('input', () => {
+        this._validation(item);
+        this._toggleSubmit();
+      })
+    })
   }
 }
 
-//ФУНКЦИОНАЛ
-function enableValidation(parametres){
-  document.querySelectorAll(parametres.formSelector).forEach((currentForm)=>{
-    const inputList = Array.from(currentForm.querySelectorAll(parametres.inputSelector));
-    const currentButton = currentForm.querySelector(parametres.submitButtonSelector);
-    toggleSubmit(inputList, currentButton, parametres.inactiveButtonClass);
-    inputList.forEach((currentInput)=>{
-      currentInput.addEventListener('input', () => {
-        validation(currentForm, currentInput, parametres.inputErrorClass, parametres.errorClass);
-        toggleSubmit(inputList, currentButton, parametres.inactiveButtonClass);
-      });
-    })
-  });
-}
-enableValidation({
-  formSelector: 'form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__submit',
-  inactiveButtonClass: 'form__submit_disabled',
-  inputErrorClass: 'form__input-error_active',
-  errorClass: 'form__input_validation_error'
-});
+export default FormValidator;
