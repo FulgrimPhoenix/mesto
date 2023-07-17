@@ -1,3 +1,5 @@
+import {popupPicture, popupPicpureImage, popupPicpureTitle, openPopup} from './index.js';
+
 class Card {
   constructor(templateSelector, data){
     this._templateSelector = templateSelector;
@@ -15,51 +17,40 @@ class Card {
     return cardTemplate
   }
 
-  _toggleLikeStatus(){
-    this._element.querySelector('.photo-grid__like-button-image').addEventListener('click', evt => {
-      evt.target.closest('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active')
-    })
+  _getCardParametres(){
+    this._cardImage = this._element.querySelector('.photo-grid__photo');
+    this._cardTitle = this._element.querySelector('.photo-grid__title');
   }
 
+  _toggleLikeStatus(){
+    this._element.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active')
+    }
+
   _deleteCard(){
-    this._element.querySelector('.photo-grid__delete-button').addEventListener('click', evt => {
-      evt.target.closest('.photo-grid__cell').remove();
-    })
+    this._element.remove();
   }
 
   _openPopup(){
-    const popupPicture = document.querySelector('.popup-picture');
-
-    this._element.querySelector('.photo-grid__photo').addEventListener('click', () => {
-    popupPicture.classList.add('popup_opened');
-    document.addEventListener('keydown', event => this._addKeyboardListener(event));
-    popupPicture.querySelector('.popup-picture__photo').src = this._cardLink;
-    popupPicture.querySelector('.popup-picture__photo').alt = this._cardName;
-    popupPicture.querySelector('.popup-picture__title').textContent = this._cardName;
-    })
-  }
-
-  _addKeyboardListener(event){
-    if (event.key === 'Escape'){
-      const popupPicture = document.querySelector('.popup-picture');
-      popupPicture.classList.remove('popup_opened');
-      document.removeEventListener('keydown', event => this._addKeyboardListener(event));
-    }
+    openPopup(popupPicture);
+    popupPicpureImage.src = this._cardLink;
+    popupPicpureImage.alt = this._cardName;
+    popupPicpureTitle.textContent = this._cardName;
   }
 
   _setEventListeners(){
-    this._deleteCard();//логика удаления
-    this._toggleLikeStatus();//логика лайка
-    this._openPopup()//открытие полноэкранной картинки
+    this._element.querySelector('.photo-grid__like-button-image').addEventListener('click', () => this._toggleLikeStatus());
+    this._element.querySelector('.photo-grid__delete-button').addEventListener('click', () => this._deleteCard());
+    this._cardImage.addEventListener('click', () => this._openPopup())
   }
 
   generateCard(){
     this._element = this._getTemplate();
+    this._getCardParametres();
     this._setEventListeners();
 
-    this._element.querySelector('.photo-grid__photo').src = this._cardLink;
-    this._element.querySelector('.photo-grid__photo').alt = this._cardName;
-    this._element.querySelector('.photo-grid__title').textContent = this._cardName;
+    this._cardImage.src = this._cardLink;
+    this._cardImage.alt = this._cardName;
+    this._cardTitle.textContent = this._cardName;
 
     return this._element
   }

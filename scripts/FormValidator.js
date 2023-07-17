@@ -7,6 +7,7 @@ class FormValidator{
     this._inactiveButtonClass = parametres.inactiveButtonClass;
     this._inputErrorClass = parametres.inputErrorClass;
     this._errorClass = parametres.errorClass;
+    this._inputList = Array.from(this._currentForm.querySelectorAll(this._inputSelector));
   }
   //показать ошибку валидации
   _showInputError(item){
@@ -23,22 +24,16 @@ class FormValidator{
       errorSpan.classList.remove(this._inputErrorClass);
   }
   //проверка инпута
-  _validation (item){
+  _validateInput (item){
     if (!item.validity.valid){
       this._showInputError(item);
     }else{
       this._hideInputError(item);
     }
   }
-  //список инпутов данной формы
-  _getInputList(){
-    this._inputList = Array.from(this._currentForm.querySelectorAll(this._inputSelector));
-
-    return this._inputList
-  }
   //проверка инпутов формы на валидность
   _hasInvalidInput(){
-    return this._getInputList().some((item) => {
+    return this._inputList.some((item) => {
       return (!item.validity.valid)
     })
   }
@@ -60,11 +55,17 @@ class FormValidator{
       this._switchingOnButton();
     }
   }
+  resetValidation() {
+    this._inputList.forEach((input) => {
+      this._hideInputError(input)
+    })
+    this._toggleSubmit()
+  }
   //активация валидации
   enableValidation(){
-    this._getInputList().forEach(item => {
+    this._inputList.forEach(item => {
       item.addEventListener('input', () => {
-        this._validation(item);
+        this._validateInput(item);
         this._toggleSubmit();
       })
     })
