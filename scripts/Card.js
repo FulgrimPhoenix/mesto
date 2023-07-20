@@ -17,13 +17,14 @@ class Card {
     return cardTemplate
   }
 
-  _getCardParametres(){
+  _setCardParametres(){
     this._cardImage = this._element.querySelector('.photo-grid__photo');
     this._cardTitle = this._element.querySelector('.photo-grid__title');
+    this._cardLikeButton = this._element.querySelector('.photo-grid__like-button-image');
   }
 
   _toggleLikeStatus(){
-    this._element.querySelector('.photo-grid__like-button-image').classList.toggle('photo-grid__like-button-image_active')
+    this._cardLikeButton.classList.toggle('photo-grid__like-button-image_active')
     }
 
   _deleteCard(){
@@ -38,14 +39,14 @@ class Card {
   }
 
   _setEventListeners(){
-    this._element.querySelector('.photo-grid__like-button-image').addEventListener('click', () => this._toggleLikeStatus());
+    this._cardLikeButton.addEventListener('click', () => this._toggleLikeStatus());
     this._element.querySelector('.photo-grid__delete-button').addEventListener('click', () => this._deleteCard());
     this._cardImage.addEventListener('click', () => this._openPopup())
   }
 
   generateCard(){
     this._element = this._getTemplate();
-    this._getCardParametres();
+    this._setCardParametres();
     this._setEventListeners();
 
     this._cardImage.src = this._cardLink;
