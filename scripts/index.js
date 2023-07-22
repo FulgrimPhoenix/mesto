@@ -123,6 +123,4 @@ forms.forEach((form) => {
   formValidators[form.name] = validator 
 })
 
-
-
 export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup }
