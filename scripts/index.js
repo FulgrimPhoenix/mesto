@@ -30,7 +30,6 @@ const formProfileName = document.querySelector('.form__input_field_name');
 const formProfileSpeciality = document.querySelector('.form__input_field_speciality');
 const formCardName = formAddCard.querySelector('.popup__input_field_title');
 const formCardReference = formAddCard.querySelector('.popup__input_field_link');
-const formValidationList = []
 //поля профиля
 const profileName = profile.querySelector('.profile__name');
 const profileSpeciality = profile.querySelector('.profile__info');
@@ -84,7 +83,7 @@ popups.forEach((item) => {
 editProfileButtonOpenPopup.addEventListener('click', () => {
   openPopup(popupProfile);
   fillProfileInputs();
-  formValidationList[0].resetValidation();
+  formValidators['popup__profile'].resetValidation()
 });
 
 formEditProfile.addEventListener('submit', (evt) => {
@@ -96,7 +95,7 @@ formEditProfile.addEventListener('submit', (evt) => {
 addCardButtonOpenPopup.addEventListener('click', () => {
   openPopup(popupAddCard);
   formAddCard.reset();
-  formValidationList[1].resetValidation();
+  formValidators['popup__add-card-form'].resetValidation()
 });
 
 exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
@@ -115,11 +114,15 @@ formAddCard.addEventListener('submit', evt => {
   hideClosestPopup (evt);
 });
 
-forms.forEach(item => {
-  const currentForm = new FormValidator(parametres, item)
-  currentForm.enableValidation()
-  formValidationList.push(currentForm);
-  return formValidationList
+const formValidators = {}
+
+forms.forEach((form) => {
+  const validator = new FormValidator(parametres, form);
+  validator.enableValidation()
+
+  formValidators[form.name] = validator 
 })
+
+
 
 export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup }
