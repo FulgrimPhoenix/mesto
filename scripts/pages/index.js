@@ -1,6 +1,8 @@
-import initialCards from './initialCards.js';
-import Card from './card.js';
-import FormValidator from './FormValidator.js';
+import initialCards from '../utils/initialCards.js';
+import Card from '../components/Card.js';
+import FormValidator from '../FormValidator.js';
+import Section from '../components/Section.js';
+import Popup from '../components/popup.js';
 //ПЕРЕМЕННЫЕ
 const parametres = {
   formSelector: 'form',
@@ -81,7 +83,7 @@ popups.forEach((item) => {
   });
 })
 editProfileButtonOpenPopup.addEventListener('click', () => {
-  openPopup(popupProfile);
+  popupList['popup-prifile'].open();
   fillProfileInputs();
   formValidators['popup__profile'].resetValidation()
 });
@@ -93,16 +95,22 @@ formEditProfile.addEventListener('submit', (evt) => {
 });
 
 addCardButtonOpenPopup.addEventListener('click', () => {
-  openPopup(popupAddCard);
+  popupList['popup-add-card'].open();
   formAddCard.reset();
   formValidators['popup__add-card-form'].resetValidation()
 });
 
 exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
 
-initialCards.forEach(item => {
-  spaceForCards.append(createCard(item))
-})
+const cardList = new Section ({
+  items: initialCards, 
+  renederer: (item) => {
+    const card = new Card('#photo-grid__cell', item);
+    const cardElement = card.generateCard();
+    cardList._setItem(cardElement);
+}
+}, spaceForCards);
+cardList.renderItems()
 
 formAddCard.addEventListener('submit', evt => {
   evt.preventDefault();
@@ -115,6 +123,7 @@ formAddCard.addEventListener('submit', evt => {
 });
 
 const formValidators = {}
+const popupList = {}
 
 forms.forEach((form) => {
   const validator = new FormValidator(parametres, form);
@@ -123,4 +132,13 @@ forms.forEach((form) => {
   formValidators[form.name] = validator 
 })
 
-export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup }
+popups.forEach((item) => {
+  const popup = new Popup(item);
+
+  popupList[item.id] = popup;
+})
+
+console.log(formValidators)
+console.log(popupList)
+
+export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup, popupList }
