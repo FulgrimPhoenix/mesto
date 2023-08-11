@@ -2,7 +2,8 @@ import initialCards from '../utils/initialCards.js';
 import Card from '../components/Card.js';
 import FormValidator from '../FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/popup.js';
+import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 //ПЕРЕМЕННЫЕ
 const parametres = {
   formSelector: 'form',
@@ -43,12 +44,12 @@ const spaceForCards = document.querySelector('.photo-grid');
 //откарытие попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEsc);
+
 }
 //Закрытие попапа
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEsc);
+
 }
 //скрытие текущего попапа
 function hideClosestPopup (event) {
@@ -60,30 +61,20 @@ function saveProfileChandes (){
   profileName.textContent = formProfileName.value;
   profileSpeciality.textContent = formProfileSpeciality.value;
 }
-//добавление слушателя escape
-function closePopupByEsc(event){
-    if (event.key === 'Escape'){
-      closePopup(document.querySelector('.popup_opened'));
-}}
 function createCard(item){
   const cardCreater = new Card('#photo-grid__cell', item);
   const newCardElement = cardCreater.generateCard();
-  return newCardElement
+  return newCardElement 
 }
 function fillProfileInputs(){
   formProfileName.value = profileName.textContent;
   formProfileSpeciality.value = profileSpeciality.textContent;
 }
 //ФУНКЦИОНАЛ
-popups.forEach((item) => {
-  item.addEventListener('click', (event)=>{
-    if (event.target.classList.contains('popup')){
-      closePopup(item);
-    }
-  });
-})
+
 editProfileButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-prifile'].open();
+  popupList['popup-prifile'].setEventListeners();
   fillProfileInputs();
   formValidators['popup__profile'].resetValidation()
 });
@@ -96,16 +87,23 @@ formEditProfile.addEventListener('submit', (evt) => {
 
 addCardButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-add-card'].open();
+  popupList['popup-add-card'].setEventListeners();
   formAddCard.reset();
   formValidators['popup__add-card-form'].resetValidation()
 });
 
-exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
+//exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
 
 const cardList = new Section ({
   items: initialCards, 
   renederer: (item) => {
-    const card = new Card('#photo-grid__cell', item);
+    const card = new Card('#photo-grid__cell', item, {
+      handleCardClick: () => {
+        const cardPopup = new PopupWithImage( popupPicture, item);
+        cardPopup.open();
+        cardPopup.setEventListeners();
+      }
+    });
     const cardElement = card.generateCard();
     cardList._setItem(cardElement);
 }
@@ -137,8 +135,5 @@ popups.forEach((item) => {
 
   popupList[item.id] = popup;
 })
-
-console.log(formValidators)
-console.log(popupList)
 
 export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup, popupList }

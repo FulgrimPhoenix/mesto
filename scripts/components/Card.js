@@ -1,10 +1,11 @@
 import {popupPicture, popupPicpureImage, popupPicpureTitle, openPopup, popupList} from '../pages/index.js';
 
 class Card {
-  constructor(templateSelector, data){
+  constructor(templateSelector, data, { handleCardClick } ){
     this._templateSelector = templateSelector;
     this._cardName = data.name;
     this._cardLink = data.link;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate(){
@@ -31,17 +32,10 @@ class Card {
     this._element.remove();
   }
 
-  _openPopup(){
-    openPopup(popupPicture);
-    popupPicpureImage.src = this._cardLink;
-    popupPicpureImage.alt = this._cardName;
-    popupPicpureTitle.textContent = this._cardName;
-  }
-
   _setEventListeners(){
     this._cardLikeButton.addEventListener('click', () => this._toggleLikeStatus());
     this._element.querySelector('.photo-grid__delete-button').addEventListener('click', () => this._deleteCard());
-    this._cardImage.addEventListener('click', () => this._openPopup())
+    this._cardImage.addEventListener('click', () => this._handleCardClick())
   }
 
   generateCard(){
