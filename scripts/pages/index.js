@@ -4,6 +4,7 @@ import FormValidator from '../FormValidator.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 //ПЕРЕМЕННЫЕ
 const parametres = {
   formSelector: 'form',
@@ -16,7 +17,7 @@ const parametres = {
 const profile = document.querySelector('.profile');
 //попапы
 const popups = document.querySelectorAll('.popup');
-const popupProfile = document.querySelector('.popup-prifile');
+const popupProfile = document.querySelector('.popup-profile');
 const popupAddCard = document.querySelector('.popup-add-card');
 const popupPicture = document.querySelector('.popup-picture');
 const popupPicpureImage = popupPicture.querySelector('.popup-picture__photo');
@@ -73,17 +74,17 @@ function fillProfileInputs(){
 //ФУНКЦИОНАЛ
 
 editProfileButtonOpenPopup.addEventListener('click', () => {
-  popupList['popup-prifile'].open();
-  popupList['popup-prifile'].setEventListeners();
+  popupList['popup-profile'].open();
+  popupList['popup-profile'].setEventListeners();
   fillProfileInputs();
   formValidators['popup__profile'].resetValidation()
 });
 
-formEditProfile.addEventListener('submit', (evt) => {
+/*formEditProfile.addEventListener('submit', (evt) => {
   evt.preventDefault();
   saveProfileChandes();
   hideClosestPopup (evt);
-});
+});*/
 
 addCardButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-add-card'].open();
@@ -91,8 +92,6 @@ addCardButtonOpenPopup.addEventListener('click', () => {
   formAddCard.reset();
   formValidators['popup__add-card-form'].resetValidation()
 });
-
-//exitButtons.forEach(item => {item.addEventListener('click', (event) => hideClosestPopup (event));})
 
 const cardList = new Section ({
   items: initialCards, 
@@ -130,10 +129,21 @@ forms.forEach((form) => {
   formValidators[form.name] = validator 
 })
 
+const profileForm = new PopupWithForm(popupProfile, {
+  submit: ()=>{
+    const formData =  profileForm._getInputValues();
+    profileName.textContent = formData['field-name'];
+    profileSpeciality.textContent = formData['field-speciality'];
+    profileForm.close();
+  }
+})
+profileForm.setEventListeners();
+
+
 popups.forEach((item) => {
   const popup = new Popup(item);
 
   popupList[item.id] = popup;
 })
 
-export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup, popupList }
+export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup, popupList, popupProfile }
