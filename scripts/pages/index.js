@@ -80,12 +80,6 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
   formValidators['popup__profile'].resetValidation()
 });
 
-/*formEditProfile.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  saveProfileChandes();
-  hideClosestPopup (evt);
-});*/
-
 addCardButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-add-card'].open();
   popupList['popup-add-card'].setEventListeners();
@@ -129,16 +123,6 @@ const newCard = new PopupWithForm(popupAddCard, {
   }
 })
 newCard.setEventListeners()
-
-/*formAddCard.addEventListener('submit', evt => {
-  evt.preventDefault();
-  const data = {
-    name: `${formCardName.value}`,
-    link: `${formCardReference.value}`
-  };
-  spaceForCards.prepend(createCard(data));
-  hideClosestPopup (evt);
-});*/
 
 const formValidators = {}
 const popupList = {}
