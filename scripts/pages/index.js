@@ -107,9 +107,30 @@ const cardList = new Section ({
     cardList._setItem(cardElement);
 }
 }, spaceForCards);
-cardList.renderItems()
+cardList.renderItems();
 
-formAddCard.addEventListener('submit', evt => {
+const newCard = new PopupWithForm(popupAddCard, { 
+  submit: () => {
+    const itemData = newCard._getInputValues();
+    const data = {
+      name: itemData['field-title'],
+      link: itemData['field-url']
+    };
+    const card = new Card('#photo-grid__cell', data,{
+      handleCardClick: () => {
+        const cardPopup = new PopupWithImage( popupPicture, data);
+        cardPopup.open();
+        cardPopup.setEventListeners();
+      }
+    });
+    const cardElement = card.generateCard()
+    cardList.addItem(cardElement);
+    newCard.close()
+  }
+})
+newCard.setEventListeners()
+
+/*formAddCard.addEventListener('submit', evt => {
   evt.preventDefault();
   const data = {
     name: `${formCardName.value}`,
@@ -117,7 +138,7 @@ formAddCard.addEventListener('submit', evt => {
   };
   spaceForCards.prepend(createCard(data));
   hideClosestPopup (evt);
-});
+});*/
 
 const formValidators = {}
 const popupList = {}
