@@ -5,6 +5,7 @@ import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 //ПЕРЕМЕННЫЕ
 const parametres = {
   formSelector: 'form',
@@ -37,47 +38,18 @@ const formCardReference = formAddCard.querySelector('.popup__input_field_link');
 //поля профиля
 const profileName = profile.querySelector('.profile__name');
 const profileSpeciality = profile.querySelector('.profile__info');
-formProfileName.value = profileName.textContent;
-formProfileSpeciality.value = profileSpeciality.textContent;
 //карточки
 const spaceForCards = document.querySelector('.photo-grid');
-//ФУНКЦИИ
-//откарытие попапа
-function openPopup (popup) {
-  popup.classList.add('popup_opened');
-
-}
-//Закрытие попапа
-function closePopup (popup) {
-  popup.classList.remove('popup_opened');
-
-}
-//скрытие текущего попапа
-function hideClosestPopup (event) {
-  closePopup(event.target.closest('.popup'));
-}
-
-//редактирование профиля
-function saveProfileChandes (){
-  profileName.textContent = formProfileName.value;
-  profileSpeciality.textContent = formProfileSpeciality.value;
-}
-function createCard(item){
-  const cardCreater = new Card('#photo-grid__cell', item);
-  const newCardElement = cardCreater.generateCard();
-  return newCardElement 
-}
-function fillProfileInputs(){
-  formProfileName.value = profileName.textContent;
-  formProfileSpeciality.value = profileSpeciality.textContent;
-}
 //ФУНКЦИОНАЛ
 
 editProfileButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-profile'].open();
   popupList['popup-profile'].setEventListeners();
-  fillProfileInputs();
-  formValidators['popup__profile'].resetValidation()
+  const userInfo = new UserInfo({name: profileName, description: profileSpeciality});
+  const profileData = userInfo.getUserInfo();
+  formProfileName.value = profileData['currentName'];
+  formProfileSpeciality.value = profileData['currentAbout'];
+  formValidators['popup__profile'].resetValidation();
 });
 
 addCardButtonOpenPopup.addEventListener('click', () => {
@@ -101,6 +73,7 @@ const cardList = new Section ({
     cardList._setItem(cardElement);
 }
 }, spaceForCards);
+
 cardList.renderItems();
 
 const newCard = new PopupWithForm(popupAddCard, { 
@@ -135,20 +108,18 @@ forms.forEach((form) => {
 })
 
 const profileForm = new PopupWithForm(popupProfile, {
-  submit: ()=>{
+  submit: () => {
     const formData =  profileForm._getInputValues();
-    profileName.textContent = formData['field-name'];
-    profileSpeciality.textContent = formData['field-speciality'];
+    const userInfo = new UserInfo({name: profileName, description: profileSpeciality});
+    userInfo.setUserInfo(formData['field-name'], formData['field-speciality'])
     profileForm.close();
   }
 })
 profileForm.setEventListeners();
 
-
 popups.forEach((item) => {
   const popup = new Popup(item);
-
   popupList[item.id] = popup;
 })
 
-export { popupPicture, popupPicpureImage, popupPicpureTitle, openPopup, popupList, popupProfile }
+export { popupPicture, popupPicpureImage, popupPicpureTitle, popupList, popupProfile }

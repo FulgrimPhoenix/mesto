@@ -1,4 +1,3 @@
-import { popupProfile } from "../pages/index.js";
 import Popup from "./Popup.js";
 
 class PopupWithForm extends Popup{
@@ -16,6 +15,14 @@ class PopupWithForm extends Popup{
       this._inputData[item.id] = item.value;
     })
     return this._inputData
+  }
+  close(){
+    this._popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', () => this._handleEscClose());
+    const inputList = this._popup.querySelectorAll('.form__input');
+    inputList.forEach(item => {
+      item.value = '';
+    })
   }
   setEventListeners(){
     document.querySelector('.popup__exit').addEventListener('click', () => {
