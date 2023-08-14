@@ -1,16 +1,20 @@
  const initialCards = [
   {
-    name: 'Хобби',
-    link: 'https://sun9-39.userapi.com/impg/F5uBeuRTa4sM2bXcMwPy_UcWya-2gfkkwDMtxA/E3qWJ8c1FNA.jpg?size=1080x703&quality=96&sign=65fcfa629d491703b34c356bd242639a&type=album'
+    name: 'Мечта',
+    link: 'https://sun9-66.userapi.com/impg/1QvcOvX7T1uOoh4Mbwsr3PxVU-tnCGYJLbrtHg/HV1hx-_zXO4.jpg?size=1600x1200&quality=95&sign=6b8f02cfd47cf613d4a2f0967bc7004a&type=album'
   },
   {
-    name: 'Meme',
-    link: 'https://sun9-37.userapi.com/impg/g9rioXRJgbI4-GHOw_bQHnBYWn6rYcXNDu8Qvg/rniLcSmXfo8.jpg?size=1500x1500&quality=95&sign=ee43bbe862665114551d77be471f8beb&type=album'
+    name: 'Хлебный кот',
+    link: 'https://sun9-67.userapi.com/impg/i_LQrd5f9Xy0icwT48YS1cUz_s5tki3j9Iw0NA/iJ6sFUPt4NA.jpg?size=1600x1200&quality=95&sign=93b6cc51ace91a5fbc2d4eab69ff922f&type=album'
   },
   {
+    name: 'Ялта',
+    link: 'https://sun9-49.userapi.com/impg/5NMgjr1sEPMDSBDt3ronVVNQ8fpzK4qlh5lCRA/yCPnNiYZG94.jpg?size=2560x1920&quality=95&sign=ffa904947316372ac4471e27ea766dfc&type=album'
+  },
+  /*{
     name: 'Красотка',
     link: 'https://sun1-24.userapi.com/impg/ICULICkIU9DbsLlR9cB5YeadF3hpE07EIiLSRQ/aIoKut2hddk.jpg?size=1074x1073&quality=96&sign=8b5c3658e4367c75409bde24ace24542&type=album'
-  },
+  },*/
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
