@@ -6,42 +6,12 @@ import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-//ПЕРЕМЕННЫЕ
-const parametres = {
-  formSelector: 'form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__submit',
-  inactiveButtonClass: 'form__submit_disabled',
-  inputErrorClass: 'form__input-error_active',
-  errorClass: 'form__input_validation_error'
-}
-const profile = document.querySelector('.profile');
-//попапы
-const popups = document.querySelectorAll('.popup');
-const popupProfile = document.querySelector('.popup-profile');
-const popupAddCard = document.querySelector('.popup-add-card');
-const popupPicture = document.querySelector('.popup-picture');
-const popupPicpureImage = popupPicture.querySelector('.popup-picture__photo');
-const popupPicpureTitle = popupPicture.querySelector('.popup-picture__title');
-//кнопки
-const exitButtons = document.querySelectorAll('.popup__exit');
-const editProfileButtonOpenPopup = profile.querySelector('.profile__button-image');
-const addCardButtonOpenPopup = profile.querySelector('.profile__add-button-image');
-//формы
-const forms = document.querySelectorAll('.form')
-const formAddCard = document.querySelector('.popup__add-card');
-const formEditProfile = document.querySelector('.popup__profile');
-const formProfileName = document.querySelector('.form__input_field_name');
-const formProfileSpeciality = document.querySelector('.form__input_field_speciality');
-const formCardName = formAddCard.querySelector('.popup__input_field_title');
-const formCardReference = formAddCard.querySelector('.popup__input_field_link');
-//поля профиля
-const profileName = profile.querySelector('.profile__name');
-const profileSpeciality = profile.querySelector('.profile__info');
-//карточки
-const spaceForCards = document.querySelector('.photo-grid');
+import { parametres, popups, popupProfile, popupAddCard, popupPicture, editProfileButtonOpenPopup,
+addCardButtonOpenPopup, forms, formAddCard, formProfileName,
+formProfileSpeciality, profileName, profileSpeciality, spaceForCards,
+formValidators, popupList } from '../utils/constants.js'
 //ФУНКЦИОНАЛ
-
+//открытие попапа профиля
 editProfileButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-profile'].open();
   popupList['popup-profile'].setEventListeners();
@@ -51,14 +21,14 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
   formProfileSpeciality.value = profileData['currentAbout'];
   formValidators['popup__profile'].resetValidation();
 });
-
+//открытие попапа добавления карточек
 addCardButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-add-card'].open();
   popupList['popup-add-card'].setEventListeners();
   formAddCard.reset();
   formValidators['popup__add-card-form'].resetValidation()
 });
-
+//инициализация блока карточек
 const cardList = new Section ({
   items: initialCards, 
   renederer: (item) => {
@@ -75,7 +45,7 @@ const cardList = new Section ({
 }, spaceForCards);
 
 cardList.renderItems();
-
+//функция добавления карточки
 const newCard = new PopupWithForm(popupAddCard, { 
   submit: () => {
     const itemData = newCard._getInputValues();
@@ -96,17 +66,14 @@ const newCard = new PopupWithForm(popupAddCard, {
   }
 })
 newCard.setEventListeners()
-
-const formValidators = {}
-const popupList = {}
-
+//активация валидации форм
 forms.forEach((form) => {
   const validator = new FormValidator(parametres, form);
   validator.enableValidation()
 
   formValidators[form.name] = validator 
 })
-
+//функциональность реадктирования профиля
 const profileForm = new PopupWithForm(popupProfile, {
   submit: () => {
     const formData =  profileForm._getInputValues();
@@ -116,10 +83,8 @@ const profileForm = new PopupWithForm(popupProfile, {
   }
 })
 profileForm.setEventListeners();
-
+//базовая функциональность попапов
 popups.forEach((item) => {
   const popup = new Popup(item);
   popupList[item.id] = popup;
 })
-
-export { popupPicture, popupPicpureImage, popupPicpureTitle, popupList, popupProfile }
