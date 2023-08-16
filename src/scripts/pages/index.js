@@ -15,7 +15,6 @@ formValidators, popupList } from '../utils/constants.js'
 //открытие попапа профиля
 editProfileButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-profile'].open();
-  popupList['popup-profile'].setEventListeners();
   const userInfo = new UserInfo({name: profileName, description: profileSpeciality});
   const profileData = userInfo.getUserInfo();
   formProfileName.value = profileData['currentName'];
@@ -25,7 +24,6 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
 //открытие попапа добавления карточек
 addCardButtonOpenPopup.addEventListener('click', () => {
   popupList['popup-add-card'].open();
-  popupList['popup-add-card'].setEventListeners();
   formAddCard.reset();
   formValidators['popup__add-card-form'].resetValidation()
 });
@@ -89,3 +87,6 @@ popups.forEach((item) => {
   const popup = new Popup(item);
   popupList[item.id] = popup;
 })
+
+popupList['popup-profile'].setEventListeners();
+popupList['popup-add-card'].setEventListeners();

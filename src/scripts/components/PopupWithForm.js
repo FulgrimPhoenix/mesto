@@ -17,8 +17,7 @@ class PopupWithForm extends Popup{
     return this._inputData
   }
   close(){
-    this._popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', () => this._handleEscClose());
+    super.close();
     const inputList = this._popup.querySelectorAll('.form__input');
     inputList.forEach(item => {
       item.value = '';
