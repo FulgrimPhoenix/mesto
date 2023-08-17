@@ -7,7 +7,7 @@ class Section {
     this._container = selector;
   }
 
-  _setItem(el){
+  setItem(el){
     this._container.append(el)
   }
 

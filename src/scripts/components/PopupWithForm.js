@@ -16,20 +16,17 @@ class PopupWithForm extends Popup{
     })
     return this._inputData
   }
-  close(){
-    super.close();
+
+  resetValue(){
     const inputList = this._popup.querySelectorAll('.form__input');
     inputList.forEach(item => {
       item.value = '';
     })
   }
   setEventListeners(){
-    document.querySelector('.popup__exit').addEventListener('click', () => {
-      this.close();
-    });
     this._popup.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    this._submit();
+    this._submit(this._getInputValues());
   });
   }
 }

@@ -8,6 +8,7 @@ class FormValidator{
     this._inputErrorClass = parametres.inputErrorClass;
     this._errorClass = parametres.errorClass;
     this._inputList = Array.from(this._currentForm.querySelectorAll(this._inputSelector));
+    this._submitButton = this._currentForm.querySelector(this._submitButtonSelector);
   }
   //показать ошибку валидации
   _showInputError(item){
@@ -39,13 +40,13 @@ class FormValidator{
   }
   //включить кнопку
   _switchingOffButton(){
-    this._currentForm.querySelector(this._submitButtonSelector).classList.add(this._inactiveButtonClass);
-    this._currentForm.querySelector(this._submitButtonSelector).setAttribute("disabled", "disabled");
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.setAttribute("disabled", "disabled");
   }
   //выключить кнопку
   _switchingOnButton(){
-    this._currentForm.querySelector(this._submitButtonSelector).classList.remove(this._inactiveButtonClass);
-    this._currentForm.querySelector(this._submitButtonSelector).removeAttribute("disabled", "disabled");
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+    this._submitButton.removeAttribute("disabled", "disabled");
   }
   //анализатор состояния формы
   _toggleSubmit(){
