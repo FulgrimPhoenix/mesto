@@ -26,7 +26,6 @@ const profileSpeciality = document.querySelector('.profile__info');
 const spaceForCards = document.querySelector('.photo-grid');
 //
 const formValidators = {}
-const popupList = {}
 
 //ФУНКЦИОНАЛ
 function test (dataList){
@@ -93,7 +92,6 @@ const profileForm = new PopupWithForm(popupProfile, {
     console.log(data['field-name'])
     userInfo.setUserInfo(data['field-name'], data['field-speciality'])
     profileForm.close();
-    profileForm.resetValue()
   }
 })
 profileForm.setEventListeners();
