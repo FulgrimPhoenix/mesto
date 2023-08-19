@@ -1,6 +1,7 @@
 class Popup{
   constructor(selector){
     this._popup = selector;
+    this.close = this.close.bind(this)
     this._handleEscClose = this._handleEscClose.bind(this)
   }
 
@@ -31,7 +32,6 @@ class Popup{
       this.close();
     });
     this._closeByMissclick();
-    
   }
 }
 

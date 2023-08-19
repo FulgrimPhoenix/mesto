@@ -1,4 +1,4 @@
-import '../../pages/index.css'
+import '../index.css'
 import initialCards from '../utils/initialCards.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -26,9 +26,10 @@ const profileSpeciality = document.querySelector('.profile__info');
 const spaceForCards = document.querySelector('.photo-grid');
 //
 const formValidators = {}
+const formList = {}
 
 //ФУНКЦИОНАЛ
-function test (dataList){
+function createCard (dataList){
   const newCard = new Card('#photo-grid__cell', dataList,{
     handleCardClick: () => {
       cardPopup.open( dataList.link, dataList.name);
@@ -47,18 +48,14 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
 //открытие попапа добавления карточек
 addCardButtonOpenPopup.addEventListener('click', () => {
   newCard.open();
-  newCard.resetValue()
+
   formValidators['popup__add-card-form'].resetValidation()
 });
 //инициализация блока карточек
 const cardList = new Section ({
   items: initialCards, 
   renederer: (item) => {
-    const card = new Card('#photo-grid__cell', item, {
-      handleCardClick: () => {
-        cardPopup.open(item.link, item.name);
-      }
-    });
+    const card = createCard(item);
     const cardElement = card.generateCard();
     cardList.setItem(cardElement);
 }
@@ -72,29 +69,27 @@ const newCard = new PopupWithForm(popupAddCard, {
       name: data['field-title'],
       link: data['field-url']
     };
-    const card = test(dataList);
+    const card = createCard(dataList);
     const cardElement = card.generateCard()
     cardList.addItem(cardElement);
     newCard.close()
   }
 })
-newCard.setEventListeners()
+
 //активация валидации форм
 forms.forEach((form) => {
   const validator = new FormValidator(parametres, form);
   validator.enableValidation()
-
+  formList[form.name] = form;
   formValidators[form.name] = validator 
 })
 //функциональность реадктирования профиля
 const profileForm = new PopupWithForm(popupProfile, {
   submit: (data) => {
-    console.log(data['field-name'])
     userInfo.setUserInfo(data['field-name'], data['field-speciality'])
     profileForm.close();
   }
 })
-profileForm.setEventListeners();
 
 const cardPopup = new PopupWithImage( popupPicture );
 const userInfo = new UserInfo({name: profileName, description: profileSpeciality});
