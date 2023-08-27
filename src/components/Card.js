@@ -1,9 +1,10 @@
 class Card {
-  constructor(templateSelector, data, { handleCardClick } ){
+  constructor(templateSelector, data, { handleCardClick, deleteCardPopup } ){
     this._templateSelector = templateSelector;
     this._cardName = data.name;
     this._cardLink = data.link;
     this._handleCardClick = handleCardClick;
+    this._deleteCardPopup = deleteCardPopup;
   }
 
   _getTemplate(){
@@ -32,7 +33,7 @@ class Card {
 
   _setEventListeners(){
     this._cardLikeButton.addEventListener('click', () => this._toggleLikeStatus());
-    this._element.querySelector('.photo-grid__delete-button').addEventListener('click', () => this._deleteCard());
+    this._element.querySelector('.photo-grid__delete-button').addEventListener('click', () => this._deleteCardPopup());
     this._cardImage.addEventListener('click', () => this._handleCardClick())
   }
 

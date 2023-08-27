@@ -1,9 +1,7 @@
 class Section {
-  constructor({ 
-    items,
-    renederer}, selector) {
-    this._initArray = items;
-    this._renderer = renederer;
+  constructor({ renedererMyItems, rendererOwnItems }, selector) {
+    this._rendererMyItems = renedererMyItems;
+    this._rendererOwnItems = rendererOwnItems;
     this._container = selector;
   }
 
@@ -15,12 +13,13 @@ class Section {
     this._container.prepend(el)
   }
 
-  renderItems(){
-    this._initArray.forEach(item => {
-      this._renderer(item);
-    })
+  renderMyItems(item){
+    this._rendererMyItems(item);
   }
 
+  renderOwnItems(item){
+    this._rendererOwnItems(item)
+  }
 }
 
 export default Section;

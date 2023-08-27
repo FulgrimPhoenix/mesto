@@ -6,11 +6,14 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import { parametres } from '../utils/constants.js'
+import { parametres } from '../utils/constants.js';
+import Api from '../components/Api';
+import Popup from '../components/Popup';
 //попапы
 const popupProfile = document.querySelector('.popup-profile');
 const popupAddCard = document.querySelector('.popup-add-card');
 const popupPicture = document.querySelector('.popup-picture');
+const popupDeleteCard = document.querySelector('.popup-delete-card')
 //кнопки
 const editProfileButtonOpenPopup = document.querySelector('.profile__button-image');
 const addCardButtonOpenPopup = document.querySelector('.profile__add-button-image');
@@ -33,6 +36,13 @@ function createCard (dataList){
   const newCard = new Card('#photo-grid__cell', dataList,{
     handleCardClick: () => {
       cardPopup.open( dataList.link, dataList.name);
+    },
+    deleteCardPopup: () => {
+      deletePopup.open();
+      deletePopup.setEventListeners();
+      popupDeleteCard.querySelector('.form__submit_delete-button').addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        this._element.remove()})
     }
   });
   return newCard
@@ -48,20 +58,24 @@ editProfileButtonOpenPopup.addEventListener('click', () => {
 //открытие попапа добавления карточек
 addCardButtonOpenPopup.addEventListener('click', () => {
   newCard.open();
-
   formValidators['popup__add-card-form'].resetValidation()
 });
-//инициализация блока карточек
+//функциональность блока карточек
 const cardList = new Section ({
-  items: initialCards, 
-  renederer: (item) => {
+  renedererMyItems: (item) => {
     const card = createCard(item);
     const cardElement = card.generateCard();
     cardList.setItem(cardElement);
-}
+  }, 
+  rendererOwnItems: (item) => {
+    const card = createCard(item);
+    const cardElement = card.generateCard();
+    cardElement.querySelector('.photo-grid__delete-button').classList.add('photo-grid__delete-button_disabled')
+    cardList.setItem(cardElement);
+  }
 }, spaceForCards);
 
-cardList.renderItems();
+
 //функция добавления карточки
 const newCard = new PopupWithForm(popupAddCard, { 
   submit: (data) => {
@@ -69,9 +83,11 @@ const newCard = new PopupWithForm(popupAddCard, {
       name: data['field-title'],
       link: data['field-url']
     };
-    const card = createCard(dataList);
-    const cardElement = card.generateCard()
-    cardList.addItem(cardElement);
+    api.addNewCard(dataList.name, dataList.link)
+    api.renderer()
+      .then((data) => {
+        cardList.renderItems(data);
+      })
     newCard.close()
   }
 })
@@ -86,12 +102,40 @@ forms.forEach((form) => {
 //функциональность реадктирования профиля
 const profileForm = new PopupWithForm(popupProfile, {
   submit: (data) => {
-    userInfo.setUserInfo(data['field-name'], data['field-speciality'])
+    api.editProfileInfo(data['field-name'], data['field-speciality']);
+    api.getMyUserInfo()
+      .then((userData) => {
+        userInfo.setUserInfo(userData.name, userData.about)
+      })
     profileForm.close();
   }
 })
+//
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-73/',
+  authorization: {
+    authorization: 'aeff4cf2-7ae0-4790-a6f0-e4391c199a3c',
+    'Content-Type': 'application/json'
+  }});
+
+//добавление карточек с сервера
+api.getMyUserInfo()
+  .then((data) => {
+    const myId = data._id
+    api.renderer()
+    .then((data) => {
+      data.forEach((id) => {
+        if(id.owner._id === myId){
+          cardList.renderMyItems(id);
+        }else{
+          cardList.renderOwnItems(id);
+        }})
+    })
+  })
+
 
 const cardPopup = new PopupWithImage( popupPicture );
+const deletePopup = new Popup(popupDeleteCard)
 const userInfo = new UserInfo({name: profileName, description: profileSpeciality});
 
 cardPopup.setEventListeners();

@@ -23,6 +23,7 @@
 @import url(./blocks/photo-grid/__like-button-image/photo-grid__like-button-image.css);
 @import url(./blocks/photo-grid/__like-button-image/_active/photo-grid__like-button-image_active.css);
 @import url(./blocks/photo-grid/__delete/photo-grid__delete-button.css);
+@import url(./blocks/photo-grid/__delete/_disabled/photo-grid__delete-button_disabled.css);
 
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__author/footer__author.css);
