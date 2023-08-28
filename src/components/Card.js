@@ -27,7 +27,7 @@ class Card {
     this._cardLikeButton.classList.toggle('photo-grid__like-button-image_active')
     }
 
-  _deleteCard(){
+  deleteCard(){
     this._element.remove();
   }
 

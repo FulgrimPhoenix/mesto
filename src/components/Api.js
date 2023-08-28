@@ -42,6 +42,13 @@ class Api{
     })
     .then((res) => res.json())
   }
+
+  deleteCard(id){
+    return fetch(this._url + 'cards/' + id,{
+      method: 'DELETE',
+      headers: this._authorization
+    })
+  }
 }
 
 export default Api

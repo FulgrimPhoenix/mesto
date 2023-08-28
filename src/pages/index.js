@@ -17,6 +17,7 @@ const popupDeleteCard = document.querySelector('.popup-delete-card')
 //кнопки
 const editProfileButtonOpenPopup = document.querySelector('.profile__button-image');
 const addCardButtonOpenPopup = document.querySelector('.profile__add-button-image');
+const popupDeleteCardButton = popupDeleteCard.querySelector('.form__submit_delete-button')
 //формы
 const forms = document.querySelectorAll('.form')
 const formAddCard = document.querySelector('.popup__add-card');
@@ -38,11 +39,17 @@ function createCard (dataList){
       cardPopup.open( dataList.link, dataList.name);
     },
     deleteCardPopup: () => {
+      const id = dataList._id;
       deletePopup.open();
       deletePopup.setEventListeners();
-      popupDeleteCard.querySelector('.form__submit_delete-button').addEventListener('submit', (evt) => {
+      popupDeleteCardButton.addEventListener('click', (evt) => {
         evt.preventDefault();
-        this._element.remove()})
+        newCard.deleteCard();
+        api.deleteCard(id)
+          .then((res) => res.json())
+          .then((dataa) => console.log(dataa))
+      deletePopup.close();
+      });
     }
   });
   return newCard
@@ -84,10 +91,10 @@ const newCard = new PopupWithForm(popupAddCard, {
       link: data['field-url']
     };
     api.addNewCard(dataList.name, dataList.link)
-    api.renderer()
-      .then((data) => {
-        cardList.renderItems(data);
-      })
+    // api.renderer()
+    //   .then((data) => {
+    //     cardList.renderItems(data);
+    //   })
     newCard.close()
   }
 })
