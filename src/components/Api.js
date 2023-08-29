@@ -4,7 +4,7 @@ class Api{
     this._authorization = authorization;
   }
 
-  renderer(){
+  getCardsInfo(){
     return fetch(this._url + 'cards', {
         headers: this._authorization
         })
@@ -16,7 +16,12 @@ class Api{
       method: 'GET',
       headers: this._authorization
     })
-    .then((res) => res.json())
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 
   editProfileInfo(name, about){
@@ -28,7 +33,12 @@ class Api{
         about: about
       })
     })
-    .then(this.getMyUserInfo().then((data) => console.log(data)))
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 
   addNewCard(name, link){
@@ -40,7 +50,12 @@ class Api{
         link: link
       })
     })
-    .then((res) => res.json())
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 
   deleteCard(id){
@@ -48,6 +63,54 @@ class Api{
       method: 'DELETE',
       headers: this._authorization
     })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  likeThisCard(id){
+    return fetch(this._url + 'cards/' + id + '/likes',{
+      method: 'PUT',
+      headers: this._authorization
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  unLikeThisCard(id){
+    return fetch(this._url + 'cards/' + id + '/likes',{
+      method: 'DELETE',
+      headers: this._authorization
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  updateAvatar(link){
+    return fetch (this._url + 'users/me/avatar',{
+      method: 'PATCH',
+      headers: this._authorization,
+      body: JSON.stringify({
+        avatar: link
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 }
 

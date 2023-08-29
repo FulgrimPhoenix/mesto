@@ -23,7 +23,6 @@ class Popup{
   _closeByMissclick(){
     this._popup.addEventListener('click', (event)=>{
       if (event.target.classList.contains('popup')){
-        console.log('11')
         this.close();
       }
     });

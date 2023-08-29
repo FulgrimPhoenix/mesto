@@ -1,4 +1,10 @@
 .profile__avatar{
   width: 120px;
   object-fit: cover;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.profile__avatar:hover{
+  opacity: .2;
 }
