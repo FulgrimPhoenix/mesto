@@ -1,16 +1,17 @@
 import Popup from "./Popup.js";
-import {popupPicpureImage, popupPicpureTitle} from '../utils/constants.js';
 
 class PopupWithImage extends Popup{
-  constructor(selector){
+  constructor(selector, popupPicpureImage, popupPicpureTitle){
     super();
+    this._popupPicpureImage = popupPicpureImage;
+    this._popupPicpureTitle = popupPicpureTitle;
     this._popup = selector;
   }
   open(image, title){
     super.open()
-    popupPicpureImage.src = image;
-    popupPicpureImage.alt = title;
-    popupPicpureTitle.textContent = title;
+    this._popupPicpureImage.src = image;
+    this._popupPicpureImage.alt = title;
+    this._popupPicpureTitle.textContent = title;
   }
 }
 
