@@ -7,7 +7,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import { parametres, popupPicpureImage, popupPicpureTitle } from '../utils/constants.js';
 import Api from '../components/Api';
-import Popup from '../components/Popup';
 import PopupForDelete from '../components/PopupForDelete';
 //попапы
 const popupProfile = document.querySelector('.popup-profile');
@@ -19,7 +18,8 @@ const popupEditProfileAvatar = document.querySelector('.popup-avatar')
 const editProfileButtonOpenPopup = document.querySelector('.profile__button-image');
 const editAvatarButton = document.querySelector('.profile__avatar-cage')
 const addCardButtonOpenPopup = document.querySelector('.profile__add-button-image');
-const AddCardSubmit = document.querySelector('.form__submit_create-button')
+const addCardSubmit = document.querySelector('.form__submit_create-button')
+const deleteCardButton = document.querySelector('.form__submit_delete-button')
 //формы
 const forms = document.querySelectorAll('.form');
 const popupEditProfile = document.querySelector('.popup__profile')
@@ -86,9 +86,9 @@ function createCard (dataList, likeData){
     handleCardClick: () => {
       cardPopup.open( dataList.link, dataList.name);
     },
-    deleteCardPopup: (newCard) => {
+    deleteCardPopup: () => {
       console.log(newCard);
-      deletePopup.open(dataList._id);
+      deletePopup.open(dataList._id, newCard);
     },
     likeThisCard: () => {
       api.getCardsInfo()
@@ -98,7 +98,7 @@ function createCard (dataList, likeData){
               if (!checkForCount(el, myUserInfo._id)){
                 api.likeThisCard(el._id)
                 .then((data) => {
-                  newCard._toggleLikeStatus();
+                  newCard.toggleLikeStatus();
                   newCard.editLikeCounter(data.likes.length)
                 })
                 .catch((err) => {
@@ -107,7 +107,7 @@ function createCard (dataList, likeData){
               }else{
                 api.unLikeThisCard(el._id)
                 .then((data) => {
-                  newCard._toggleLikeStatus();
+                  newCard.toggleLikeStatus();
                   newCard.editLikeCounter(data.likes.length);
                 })
                 .catch((err) => {
@@ -168,7 +168,7 @@ const newCard = new PopupWithForm(popupAddCard, {
     };    
     api.addNewCard(dataList.name, dataList.link)
     .then((data) => {
-      AddCardSubmit.textContent = 'Создание...'
+      addCardSubmit.textContent = 'Создание...'
       const likeInfo = {}
       likeStatus(data, serverCards, likeInfo);
       const card = createCard(data, likeInfo);
@@ -181,19 +181,23 @@ const newCard = new PopupWithForm(popupAddCard, {
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => {AddCardSubmit.textContent = 'Создать'})
+    .finally(() => {addCardSubmit.textContent = 'Создать'})
   }
 })
 
 const cardPopup = new PopupWithImage( popupPicture, popupPicpureImage, popupPicpureTitle );
 const deletePopup = new PopupForDelete(popupDeleteCard, {
-  submit: (currentId) => {
+  submit: (currentId, currentCard) => {
     api.deleteCard(currentId)
-      .then(()=> { deletePopup.close()})
-      .then(()=> {location.reload()})
+      .then(()=> { 
+        deleteCardButton.textContent = 'Удаление';
+        currentCard.deleteCard();
+        deletePopup.close();
+      })
       .catch((err) => {
         console.log(err);
       })
+      .finally(() => {deleteCardButton.textContent = 'Да'})
   }
 });
 const editAvatarPopup = new PopupWithForm (popupEditProfileAvatar, {
@@ -203,12 +207,11 @@ const editAvatarPopup = new PopupWithForm (popupEditProfileAvatar, {
       link: data['field-url-avatar']
     };
     api.updateAvatar(dataList.link)
-      .then((data) => avatar.src = data.avatar)
+      .then((data) => {userInfo.setUserInfo(data.name, data.about,data.avatar)})
       .then(() => {editAvatarPopup.close()})
       .catch((err) => {
         console.log(err);
       });
-    editAvatarPopup.close()
   }
 })
 

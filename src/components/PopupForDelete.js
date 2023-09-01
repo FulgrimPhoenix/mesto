@@ -9,16 +9,17 @@ class PopupForDelete extends Popup{
 
   }
 
-  open(id){
+  open(id, element){
     super.open();
     this._id = id;
+    this._element = element;
   }
 
   setEventListeners(){
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._submit(this._id);
+      this._submit(this._id, this._element);
     });
   }
 }

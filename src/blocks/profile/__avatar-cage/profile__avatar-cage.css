@@ -2,4 +2,5 @@
   background-image: url(../../../images/profile/__avatar/__edit.svg);
   background-repeat: no-repeat;
   background-position: center;
+  max-height: 120px;
 }

@@ -27,7 +27,7 @@ class Card {
     this._likeCounter = this._element.querySelector('.photo-grid__like-counter');
   }
 
-  _toggleLikeStatus(){
+  toggleLikeStatus(){
     this._cardLikeButton.classList.toggle('photo-grid__like-button-image_active');
     }
   editLikeCounter(likeNumber){
